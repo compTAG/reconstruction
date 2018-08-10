@@ -1,6 +1,9 @@
-function(install_dependency  DEP)
+# You can customize the name of the file with the dependency list.
+set(INSTALL_DEPENDENCY_FILE_NAME "dependencies.cmake")
 
-    configure_file(CMakeLists.txt.in ${DEP}-download/CMakeLists.txt)
+function(install_dependency DEP)
+    configure_file("${CMAKE_MODULE_PATH}/${INSTALL_DEPENDENCY_FILE_NAME}"
+        ${DEP}-download/CMakeLists.txt)
     execute_process(COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" .
         RESULT_VARIABLE result
         WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/${DEP}-download )
