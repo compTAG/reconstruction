@@ -2,14 +2,13 @@ cmake_minimum_required(VERSION 2.8.11)
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/")
 include(install_dependency)
 
-enable_testing()
-
 # setup dependencies
 find_package(Boost)
 
 install_dependency("dionysus")
 set(DIONYSUS_INCLUDE_DIR "${CMAKE_BINARY_DIR}/dionysus-src/include")
 
+enable_testing()
 install_dependency("googletest")
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE) # fix settings on Windows
 
@@ -23,9 +22,6 @@ include_directories(
     ${Boost_INCLUDE_DIR}
     ${RECONSTRUCTION_INCLUDE_DIR})
 
-# setup testing
+# setup remainder of project
 add_subdirectory(test)
-
-# build the executable
-add_executable(height-filtration  filtration-persistence.cpp)
-target_link_libraries(height-filtration ${libraries})
+add_subdirectory(example)
