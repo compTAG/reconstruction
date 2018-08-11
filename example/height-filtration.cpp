@@ -92,6 +92,5 @@ int main() {
     HeightFiltFactory hff(d);
 
     Filtration filtration = make_filtration(k, hff);
-    compute_persistence(k, filtration,
-            hff);
+    compute_persistence(k, filtration, hff);
 }

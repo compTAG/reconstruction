@@ -3,7 +3,7 @@
 
 
 template<typename Simplex_, typename Direction_>
-class FilterFunction {
+class HeightFilterFunction {
 
 public:
     typedef Simplex_ Simplex;
@@ -29,7 +29,7 @@ private:
     }
 
 public:
-    FilterFunction(const Direction &d) : _direction(d) {}
+    HeightFilterFunction(const Direction &d) : _direction(d) {}
 
     Range operator()(const Simplex &s) {
         Range simplex_value = 0;
@@ -51,7 +51,7 @@ public:
     typedef Simplex_ Simplex;
     typedef Direction_ Direction;
     typedef Filtration_ Filtration;
-    typedef FilterFunction<Simplex, Direction> FilterFun;
+    typedef HeightFilterFunction<Simplex, Direction> FilterFun;
 
 private:
     Direction _direction;
