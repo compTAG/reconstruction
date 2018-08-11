@@ -70,6 +70,10 @@ public:
         return (*this)(std::begin(simplices), std::end(simplices));
     }
 
+    FilterFun create_filter_fun() const {
+        return FilterFun(_direction);
+    }
+
     template<class Iterator>
     Filtration operator()(Iterator begin, Iterator end) const {
 
@@ -78,7 +82,7 @@ public:
             add_simplex(filtration, *it);
         }
 
-        FilterFun f(_direction);
+        FilterFun f = create_filter_fun();
         filtration.sort([&f](const Simplex& s1, const Simplex& s2) {
             return f(s1) < f(s2)
                 || (f(s1) == f(s2) && s1.dimension() < s2.dimension());
