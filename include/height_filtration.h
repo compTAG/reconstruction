@@ -56,7 +56,7 @@ public:
 private:
     Direction _direction;
 
-    void add_simplex(Filtration& f, const Simplex& s) {
+    void add_simplex(Filtration& f, const Simplex& s) const {
         for (auto sb : s.boundary()) {
             add_simplex(f, sb);
         }
@@ -66,12 +66,12 @@ private:
 public:
     HeightFiltrationFactory(const Direction d) : _direction(d) { }
 
-    Filtration operator()(const std::initializer_list<Simplex>& simplices) {
+    Filtration operator()(const std::initializer_list<Simplex>& simplices) const {
         return (*this)(std::begin(simplices), std::end(simplices));
     }
 
     template<class Iterator>
-    Filtration operator()(Iterator begin, Iterator end) {
+    Filtration operator()(Iterator begin, Iterator end) const {
 
         Filtration filtration;
         for (Iterator it = begin ; it != end ; ++it) {
