@@ -67,6 +67,7 @@ Persistence compute_persistence(const K& k, const Filtration& filtration,
     HeightFilterFun filter_fun = hff.create_filter_fun();
     HeightFilterFunRange inf = std::numeric_limits<HeightFilterFunRange>::max();
 
+    print_section("Persistence");
     typedef decltype(persistence.pair(0)) Index;
     for (Index i = 0; i < persistence.size(); ++i) {
         Index j = persistence.pair(i);
