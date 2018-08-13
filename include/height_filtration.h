@@ -1,9 +1,10 @@
 #ifndef _HEIGHT_FILTRATION_H_
 #define _HEIGHT_FILTRATION_H_
 
+namespace ctag {
 
 template<typename Simplex_, typename Direction_>
-class HeightFilterFunction {
+class HeightFunction {
 
 public:
     typedef Simplex_ Simplex;
@@ -14,9 +15,9 @@ public:
 
 private:
     Direction _direction;
-    std::unordered_map<Simplex, Range> _cache;
+    mutable std::unordered_map<Simplex, Range> _cache;
 
-    Range max_facet_val(const Simplex& s) {
+    Range max_facet_val(const Simplex& s) const {
         Range max_val = -1.0/0.0;
         for (auto sb : s.boundary()) {
             max_val = std::max(max_val, (*this)(sb));
@@ -24,14 +25,14 @@ private:
         return max_val;
     }
 
-    Range vert_val(const Vertex& v) {
+    Range vert_val(const Vertex& v) const {
         return v*_direction;
     }
 
 public:
-    HeightFilterFunction(const Direction &d) : _direction(d) {}
+    HeightFunction(const Direction &d) : _direction(d) {}
 
-    Range operator()(const Simplex &s) {
+    Range operator()(const Simplex &s) const {
         Range simplex_value = 0;
 
         auto value = _cache.find(s);
@@ -45,17 +46,14 @@ public:
     }
 };
 
-template<typename Simplex_, typename Direction_, typename Filtration_>
-class HeightFiltrationFactory {
+template<typename FilterFunction_, typename Filtration_>
+class FiltrationFactory {
 public:
-    typedef Simplex_ Simplex;
-    typedef Direction_ Direction;
+    typedef FilterFunction_ FilterFunction;
+    typedef typename FilterFunction::Simplex Simplex;
     typedef Filtration_ Filtration;
-    typedef HeightFilterFunction<Simplex, Direction> FilterFun;
 
 private:
-    Direction _direction;
-
     void add_simplex(Filtration& f, const Simplex& s) const {
         for (auto sb : s.boundary()) {
             add_simplex(f, sb);
@@ -64,31 +62,29 @@ private:
     }
 
 public:
-    HeightFiltrationFactory(const Direction d) : _direction(d) { }
 
-    Filtration operator()(const std::initializer_list<Simplex>& simplices) const {
-        return (*this)(std::begin(simplices), std::end(simplices));
-    }
-
-    FilterFun create_filter_fun() const {
-        return FilterFun(_direction);
+    Filtration make_filtration(const FilterFunction& f,
+            const std::initializer_list<Simplex>& simplices) const {
+        return make_filtration(f, std::begin(simplices), std::end(simplices));
     }
 
     template<class Iterator>
-    Filtration operator()(Iterator begin, Iterator end) const {
+    Filtration make_filtration(const FilterFunction& f,
+            Iterator begin, Iterator end) const {
 
         Filtration filtration;
         for (Iterator it = begin ; it != end ; ++it) {
             add_simplex(filtration, *it);
         }
 
-        FilterFun f = create_filter_fun();
         filtration.sort([&f](const Simplex& s1, const Simplex& s2) {
             return f(s1) < f(s2)
                 || (f(s1) == f(s2) && s1.dimension() < s2.dimension());
         });
         return filtration;
     }
+};
+
 };
 
 #endif
