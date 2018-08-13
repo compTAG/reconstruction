@@ -4,7 +4,8 @@
 #include <iostream>
 #include <array>
 
-namespace grid {
+// adapted and stripped down version of point from Dionysus
+namespace ctag {
 
 template<class Coordinate_, unsigned D>
 class Point: public std::array<Coordinate_, D> {

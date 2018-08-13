@@ -7,11 +7,12 @@
 #include <dionysus/ordinary-persistence.h>
 #include <dionysus/standard-reduction.h>
 
-#include "point.h"
-#include "height_filtration.h"
+#include "ctag/point.h"
+#include "ctag/height_filtration.h"
 
 typedef float Coordinate;
-typedef grid::Point<Coordinate, 2> Point;
+typedef ctag::Point<Coordinate, 2> Point;
+
 typedef Point Direction;
 typedef dionysus::Z2Field K;
 typedef dionysus::Simplex<Point> Simplex;
