@@ -3,7 +3,7 @@
 #include <dionysus/simplex.h>
 #include "ctag/point.h"
 
-#include "ctag/height_filtration.h"
+#include "ctag/height_function.h"
 
 class HeightFunctionTest : public ::testing::Test {
 public:

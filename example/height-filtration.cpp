@@ -8,6 +8,7 @@
 #include <dionysus/standard-reduction.h>
 
 #include "ctag/point.h"
+#include "ctag/height_function.h"
 #include "ctag/height_filtration.h"
 
 typedef float Coordinate;
