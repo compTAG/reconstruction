@@ -1,6 +1,8 @@
 #ifndef _HEIGHT_FILTRATION_H_
 #define _HEIGHT_FILTRATION_H_
 
+#include <unordered_map>
+
 namespace ctag {
 
 template<typename Simplex_, typename Direction_>
