@@ -7,11 +7,13 @@
 #include <dionysus/ordinary-persistence.h>
 #include <dionysus/standard-reduction.h>
 
-#include "point.h"
-#include "height_filtration.h"
+#include "ctag/point.h"
+#include "ctag/height_function.h"
+#include "ctag/filtration_factory.h"
 
 typedef float Coordinate;
-typedef grid::Point<Coordinate, 2> Point;
+typedef ctag::Point<Coordinate, 2> Point;
+
 typedef Point Direction;
 typedef dionysus::Z2Field K;
 typedef dionysus::Simplex<Point> Simplex;
@@ -19,9 +21,9 @@ typedef dionysus::Filtration<Simplex> Filtration;
 typedef dionysus::OrdinaryPersistence<K> Persistence;
 typedef dionysus::StandardReduction<Persistence> PersistenceReducer;
 
-typedef HeightFiltrationFactory<Simplex, Direction, Filtration> HeightFiltFactory;
-typedef HeightFiltFactory::FilterFun HeightFilterFun;
-typedef HeightFilterFun::Range HeightFilterFunRange;
+typedef ctag::HeightFunction<Simplex, Direction> HeightFunction;
+typedef HeightFunction::Range HeightFunctionRange;
+typedef ctag::FiltrationFactory<HeightFunction, Filtration> FiltrationFactory;
 
 void print_section(const std::string& section_name) {
     std::cout << "########################################" << std::endl;
@@ -29,7 +31,7 @@ void print_section(const std::string& section_name) {
     std::cout << "########################################" << std::endl;
 }
 
-Filtration make_filtration(const K& k, const HeightFiltFactory& hff) {
+Filtration make_filtration(const K& k, const HeightFunction& f) {
     Point p1({0,0});
     Point p2({2,2});
     Point p3({1,3});
@@ -43,7 +45,8 @@ Filtration make_filtration(const K& k, const HeightFiltFactory& hff) {
     Simplex e3({p6, p5});
     Simplex e4({p5, p4});
 
-    Filtration filtration = hff({ t, e1, e2, e3, e4 });
+    FiltrationFactory factory;
+    Filtration filtration = factory.make_filtration(f, { t, e1, e2, e3, e4 });
 
     print_section("Filtration");
     for (auto& s : filtration) {
@@ -58,14 +61,13 @@ Filtration make_filtration(const K& k, const HeightFiltFactory& hff) {
     return filtration;
 }
 
-Persistence compute_persistence(const K& k, const Filtration& filtration,
-        const HeightFiltFactory& hff) {
+Persistence compute_persistence(const K& k, const HeightFunction& f,
+        const Filtration& filtration) {
     Persistence persistence(k);
     PersistenceReducer reduce(persistence);
     reduce(filtration);
 
-    HeightFilterFun filter_fun = hff.create_filter_fun();
-    HeightFilterFunRange inf = std::numeric_limits<HeightFilterFunRange>::max();
+    HeightFunctionRange inf = std::numeric_limits<HeightFunctionRange>::max();
 
     print_section("Persistence");
     typedef decltype(persistence.pair(0)) Index;
@@ -74,9 +76,8 @@ Persistence compute_persistence(const K& k, const Filtration& filtration,
         if (j < i) continue;
 
         int dim = filtration[i].dimension();
-        auto birth = filter_fun(filtration[i]);
-        auto death = (j == persistence.unpaired())
-            ? inf : filter_fun(filtration[j]);
+        auto birth = f(filtration[i]);
+        auto death = (j == persistence.unpaired()) ? inf : f(filtration[j]);
 
         std::cout << dim << ": (" << birth << ", " << death << ")" << std::endl;
     }
@@ -89,9 +90,8 @@ Persistence compute_persistence(const K& k, const Filtration& filtration,
 int main() {
     K k;
     Direction d({1,0});
-    HeightFiltFactory hff(d);
+    HeightFunction f(d);
 
-    Filtration filtration = make_filtration(k, hff);
-    compute_persistence(k, filtration,
-            hff);
+    Filtration filtration = make_filtration(k, f);
+    compute_persistence(k, f, filtration);
 }
