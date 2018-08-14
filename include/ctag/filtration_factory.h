@@ -1,5 +1,5 @@
-#ifndef _HEIGHT_FILTRATION_H_
-#define _HEIGHT_FILTRATION_H_
+#ifndef _FILTRATION_FACTORY_H_
+#define _FILTRATION_FACTORY_H_
 
 namespace ctag {
 

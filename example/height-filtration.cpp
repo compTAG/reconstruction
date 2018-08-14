@@ -9,7 +9,7 @@
 
 #include "ctag/point.h"
 #include "ctag/height_function.h"
-#include "ctag/height_filtration.h"
+#include "ctag/filtration_factory.h"
 
 typedef float Coordinate;
 typedef ctag::Point<Coordinate, 2> Point;
