@@ -2,6 +2,7 @@
 
 ## Dependencies
 
+- [Boost](https://www.boost.org/) (tested with 1.58)
 - [CMake](https://cmake.org) (tested with 3.11.0)
 - [Dionysus](https://github.com/mrzv/dionysus) (tested with 2.0.6)
 - [Google Test](https://github.com/google/googletest) (tested with 1.8.0)
