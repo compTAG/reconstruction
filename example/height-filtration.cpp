@@ -85,9 +85,7 @@ Persistence compute_persistence(const K& k, const HeightFunction& f,
     return persistence;
 }
 
-
-
-int main() {
+void main() {
     K k;
     Direction d({1,0});
     HeightFunction f(d);
