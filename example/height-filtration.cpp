@@ -85,11 +85,12 @@ Persistence compute_persistence(const K& k, const HeightFunction& f,
     return persistence;
 }
 
-void main() {
+int main() {
     K k;
     Direction d({1,0});
     HeightFunction f(d);
 
     Filtration filtration = make_filtration(k, f);
     compute_persistence(k, f, filtration);
+    return(0);
 }
