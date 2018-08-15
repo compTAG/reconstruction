@@ -10,7 +10,7 @@
 ## Building and Setup
 
 Dependences are installed using CMake!  For more on getting started with cmake
-see the [cmake tutoria](https://cmake.org/cmake-tutorial/). To get started just
+see the [cmake tutorial](https://cmake.org/cmake-tutorial/). To get started just
 build as you would any standard cmake project (but the dependences will be
 handled for you).
 
