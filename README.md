@@ -19,6 +19,10 @@ handled for you).
     cmake ..
     make
 
+Before making edits use:
 
+	git checkout -b [new_branch_name]
+
+to create a new branch to work on.
 
 
