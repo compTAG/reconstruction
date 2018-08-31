@@ -2,6 +2,7 @@
 #define _EULER_CHARICTERISTIC_CURVE_H_
 
 #include <list>
+#include <limits>
 
 namespace ctag {
 
@@ -28,7 +29,10 @@ public:
     typedef std::list<Value>::const_iterator const_iterator;
 
     EulerCharacteristicCurve() {
+        double neg_inf = std::numeric_limits<double>::lowest();
+        double inf = std::numeric_limits<double>::max();
 
+        _values.push_back(Value(neg_inf, inf, 0));
     }
 
     void push_back(double begin, double end, double value) {
