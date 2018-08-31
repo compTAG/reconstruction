@@ -7,12 +7,24 @@ public:
     typedef ctag::EulerCharacteristicCurve EulerCharacteristicCurve;
 };
 
-TEST_F(EulerCharacteristicCurveTest, constructor) {
+TEST_F(EulerCharacteristicCurveTest, push_back) {
 
-    EulerCharacteristicCurve curve(7);
-    EXPECT_EQ(8, curve.my_x);
+    EulerCharacteristicCurve curve;
 
-    // curve.my_x = 8;
+    curve.push_back(1, 2, 3);
+    curve.push_back(4, 5, 6);
 
+    EulerCharacteristicCurve::const_iterator value = curve.begin();
+    EXPECT_EQ(1, value->begin);
+    EXPECT_EQ(2, value->end);
+    EXPECT_EQ(3, value->value);
+
+    value++;
+    EXPECT_EQ(4, value->begin);
+    EXPECT_EQ(5, value->end);
+    EXPECT_EQ(6, value->value);
+
+    value++;
+    EXPECT_EQ(value, curve.end());
 }
 
