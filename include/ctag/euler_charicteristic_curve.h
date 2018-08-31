@@ -35,20 +35,19 @@ public:
         _values.push_back(Value(neg_inf, inf, 0));
     }
 
-    void push_back(double begin, double end, double value) {
-        _values.push_back(Value(begin, end, value));
+    void push_back(double end, double value) {
+        double last_end = _values.back().end;
+        _values.back().end = end;
+        _values.back().value = value;
+
+        _values.push_back(Value(end, last_end, value));
     }
 
     const_iterator begin() const { return _values.begin(); }
     const_iterator end() const { return _values.end(); }
 
-
-
-
     // TODO
-    // iterate over the values in the ECC
-    // implement a push_back
-    // add logic to pushback to throw do something if the input is wrong
+    // add check that values are gt than end
 
 };
 
