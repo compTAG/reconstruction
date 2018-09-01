@@ -3,6 +3,7 @@
 
 #include <list>
 #include <limits>
+#include <cassert>
 
 namespace ctag {
 
@@ -37,6 +38,11 @@ public:
 
     void push_back(double end, double value) {
         double last_end = _values.back().end;
+
+        // make sure that the users are increasing the end value
+        // so that the intervals of the function are non-overlapping
+        assert(_values.back().begin < end);
+
         _values.back().end = end;
         _values.back().value = value;
 

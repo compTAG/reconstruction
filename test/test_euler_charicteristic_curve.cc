@@ -47,3 +47,12 @@ TEST_F(EulerCharacteristicCurveTest, push_back) {
     EXPECT_EQ(value, curve.end());
 }
 
+
+TEST_F(EulerCharacteristicCurveTest, push_back_assert_failed) {
+    EulerCharacteristicCurve curve;
+
+    ASSERT_DEATH({
+        curve.push_back(2, 3);
+        curve.push_back(1, 0);
+    }, "");
+}
