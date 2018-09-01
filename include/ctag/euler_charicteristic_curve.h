@@ -36,6 +36,14 @@ public:
         _values.push_back(Value(neg_inf, inf, 0));
     }
 
+    /**
+     * Construct an interval in the ECC that ends at "end" and takes the value
+     * "value".  The beginning of the new interval is the end of the last finite
+     * interval.
+     *
+     * @param end the end (exclusive) of the interval
+     * @param value the value over the interval
+     */
     void push_back(double end, double value) {
         double last_end = _values.back().end;
 
