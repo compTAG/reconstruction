@@ -2,6 +2,9 @@ cmake_minimum_required(VERSION 2.8.11)
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/")
 include(install_dependency)
 
+# set the build type.  Good values are debug or release
+set(CMAKE_BUILD_TYPE debug)
+
 # setup dependencies
 find_package(Boost)
 
