@@ -57,6 +57,17 @@ public:
         _values.push_back(Value(end, last_end, value));
     }
 
+    /**
+     * Set the value for the "back" interval.
+     * Taat is, the interval that
+     * has positive infinity as its end
+     *
+     * @param value the value over the interval
+     */
+    void push_back(double value) {
+        _values.back().value = value;
+    }
+
     const_iterator begin() const { return _values.begin(); }
     const_iterator end() const { return _values.end(); }
 };
