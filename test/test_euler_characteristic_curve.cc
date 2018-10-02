@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "ctag/euler_charicteristic_curve.h"
+#include "ctag/euler_characteristic_curve.h"
 
 class EulerCharacteristicCurveTest : public ::testing::Test {
 public:

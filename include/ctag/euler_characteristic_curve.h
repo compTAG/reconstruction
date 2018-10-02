@@ -1,5 +1,5 @@
-#ifndef _EULER_CHARICTERISTIC_CURVE_H_
-#define _EULER_CHARICTERISTIC_CURVE_H_
+#ifndef _EULER_CHARACTERISTIC_CURVE_H_
+#define _EULER_CHARACTERISTIC_CURVE_H_
 
 #include <list>
 #include <limits>
