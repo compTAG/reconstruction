@@ -2,13 +2,13 @@
 
 #include <dionysus/simplex.h>
 #include <dionysus/filtration.h>
-//
+
 #include "ctag/point.h"
 #include "ctag/height_function.h"
-//
+
 #include "ctag/filtration_factory.h"
-//
-// #include "ctag/euler_characteristic_curve.h"
+
+#include "ctag/euler_characteristic_curve.h"
 #include "ctag/euler_characteristic_curve_factory.h"
 
 class EulerCharacteristicCurveFactoryTest : public ::testing::Test {
