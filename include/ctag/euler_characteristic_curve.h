@@ -24,12 +24,13 @@ public:
 protected:
 
     std::list<Value> _values;
+    bool _augmented;
 
 public:
 
     typedef std::list<Value>::const_iterator const_iterator;
 
-    EulerCharacteristicCurve() {
+    EulerCharacteristicCurve(bool augmented=false) : _augmented(augmented) {
         double neg_inf = std::numeric_limits<double>::lowest();
         double inf = std::numeric_limits<double>::max();
 
@@ -49,7 +50,8 @@ public:
 
         // make sure that the users are increasing the end value
         // so that the intervals of the function are non-overlapping
-        assert(_values.back().begin < end);
+        assert(_values.back().begin < end
+                || (_augmented && _values.back().begin == end));
 
         _values.back().end = end;
         _values.back().value = value;
