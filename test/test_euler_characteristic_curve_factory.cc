@@ -24,7 +24,7 @@ public:
         HeightFunction, Filtration> EulerCharacteristicCurveFactory;
 };
 
-TEST_F(EulerCharacteristicCurveFactoryTest, make_filtraton) {
+TEST_F(EulerCharacteristicCurveFactoryTest, make_augmented_curve) {
     Direction d({1,0});
     HeightFunction f(d);
 
