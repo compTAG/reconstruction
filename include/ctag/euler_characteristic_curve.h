@@ -1,5 +1,5 @@
-#ifndef _EULER_CHARICTERISTIC_CURVE_H_
-#define _EULER_CHARICTERISTIC_CURVE_H_
+#ifndef _EULER_CHARACTERISTIC_CURVE_H_
+#define _EULER_CHARACTERISTIC_CURVE_H_
 
 #include <list>
 #include <limits>
@@ -24,12 +24,13 @@ public:
 protected:
 
     std::list<Value> _values;
+    bool _augmented;
 
 public:
 
     typedef std::list<Value>::const_iterator const_iterator;
 
-    EulerCharacteristicCurve() {
+    EulerCharacteristicCurve(bool augmented=false) : _augmented(augmented) {
         double neg_inf = std::numeric_limits<double>::lowest();
         double inf = std::numeric_limits<double>::max();
 
@@ -49,12 +50,24 @@ public:
 
         // make sure that the users are increasing the end value
         // so that the intervals of the function are non-overlapping
-        assert(_values.back().begin < end);
+        assert(_values.back().begin < end
+                || (_augmented && _values.back().begin == end));
 
         _values.back().end = end;
         _values.back().value = value;
 
         _values.push_back(Value(end, last_end, value));
+    }
+
+    /**
+     * Set the value for the "back" interval.
+     * Taat is, the interval that
+     * has positive infinity as its end
+     *
+     * @param value the value over the interval
+     */
+    void push_back(double value) {
+        _values.back().value = value;
     }
 
     const_iterator begin() const { return _values.begin(); }
