@@ -20,7 +20,8 @@ public:
     typedef ctag::HeightFunction<Simplex, Direction> HeightFunction;
     typedef ctag::FiltrationFactory<HeightFunction, Filtration> FiltrationFactory;
     typedef ctag::EulerCharacteristicCurve EulerCharacteristicCurve;
-    typedef ctag::EulerCharacteristicCurveFactory< Filtration> EulerCharacteristicCurveFactory;
+    typedef ctag::EulerCharacteristicCurveFactory<
+        HeightFunction, Filtration> EulerCharacteristicCurveFactory;
 };
 
 TEST_F(EulerCharacteristicCurveFactoryTest, make_filtraton) {

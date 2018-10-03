@@ -5,9 +5,10 @@
 
 namespace ctag {
 
-template<typename Filtration_>
+template<typename FilterFunction_, typename Filtration_>
 class EulerCharacteristicCurveFactory {
 public:
+    typedef FilterFunction_ FilterFunction;
     typedef Filtration_ Filtration;
 
 public:
