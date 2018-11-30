@@ -1,5 +1,6 @@
 set(EXAMPLES
     height-filtration
+    diagram
 )
 
 foreach(example ${EXAMPLES})

@@ -33,7 +33,7 @@ public:
         Diagram() {}
       };
 
-  struct FPHT : std::array<Diagram, 10> {
+  struct FPHT : std::vector<Diagram> {
     FPHT() {}
   };
 

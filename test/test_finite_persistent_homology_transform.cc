@@ -23,7 +23,7 @@ TEST_F(FinitePersistentHomologyTransformTest, pair_constructor_nondefault) {
     EXPECT_EQ(2, pair.death);
 }
 
-// Test constructor diagram
+// Test construction of a diagram
 TEST_F(FinitePersistentHomologyTransformTest, diagram_constructor) {
   fpht::Pair pair1;
   fpht::Pair pair2;
@@ -32,12 +32,7 @@ TEST_F(FinitePersistentHomologyTransformTest, diagram_constructor) {
   fpht::Diagram diag1;
   diag1.push_back(pair1);
   diag1.push_back(pair2);
-  EXPECT_EQ(1, diag1[0].birth);
-  EXPECT_EQ(2, diag1[0].death);
-  EXPECT_EQ(3, diag1[1].birth);
-  EXPECT_EQ(4, diag1[1].death);
 }
-
 
 // Test construction of a pht
 TEST_F(FinitePersistentHomologyTransformTest, pht_constructor) {
