@@ -1,18 +1,15 @@
 #include <gtest/gtest.h>
 
-#include <dionysus/simplex.h>
-
-#include "ctag/point.h"
 #include "ctag/oracle.h"
 
 class OracleTest : public ::testing::Test {
 public:
-    typedef ctag::Point<double, 2> Point;
-    typedef Point Direction;
+    typedef ctag::Oracle Oracle;
 
-    typedef dionysus::Simplex<Point> Simplex;
-    typedef ctag::Oracle<Direction, Simplex> Oracle;
-    typedef ctag::Diagram Diagram;
+    typedef Oracle::Point Point;
+    typedef Oracle::Direction Direction;
+    typedef Oracle::Simplex Simplex;
+    typedef Oracle::Diagram Diagram;
 };
 
 TEST_F(OracleTest, diagram) {
