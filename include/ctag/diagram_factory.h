@@ -7,7 +7,6 @@
 
 #include "ctag/height_function.h"
 
-
 namespace ctag {
 
 template< class HeightFunction_, class Filtration_ >
