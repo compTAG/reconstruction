@@ -1,6 +1,7 @@
 #include "gtest/gtest.h"
 
 #include "test_height_function.cc"
+#include "test_oracle.cc"
 #include "test_filtration_line.cc"
 #include "test_filtration_factory.cc"
 #include "test_diagram.cc"
