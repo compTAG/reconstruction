@@ -1,17 +1,15 @@
 #include <gtest/gtest.h>
 
-#include <dionysus/simplex.h>
-#include "ctag/point.h"
-
+#include "ctag/types.h"
 #include "ctag/height_function.h"
 
 class HeightFunctionTest : public ::testing::Test {
 public:
-    typedef ctag::Point<double, 2> Point;
-    typedef Point Direction;
-    typedef dionysus::Simplex<Point> Simplex;
-    typedef ctag::HeightFunction<Simplex, Direction> HeightFunction;
+    typedef ctag::Types::Point Point;
+    typedef ctag::Types::Direction Direction;
+    typedef ctag::Types::Simplex Simplex;
 
+    typedef ctag::HeightFunction<Simplex, Direction> HeightFunction;
 };
 
 TEST_F(HeightFunctionTest, operator_eval_1d) {

@@ -1,19 +1,17 @@
 #include <gtest/gtest.h>
 
-#include <dionysus/simplex.h>
-#include <dionysus/filtration.h>
-
-#include "ctag/point.h"
+#include "ctag/types.h"
 #include "ctag/height_function.h"
 
 #include "ctag/filtration_factory.h"
 
 class FiltrationFactoryTest : public ::testing::Test {
 public:
-    typedef ctag::Point<double, 2> Point;
-    typedef Point Direction;
-    typedef dionysus::Simplex<Point> Simplex;
-    typedef dionysus::Filtration<Simplex> Filtration;
+    typedef ctag::Types Types;
+    typedef Types::Point Point;
+    typedef Types::Direction Direction;
+    typedef Types::Simplex Simplex;
+    typedef Types::CompTopology::Filtration Filtration;
     typedef ctag::HeightFunction<Simplex, Direction> HeightFunction;
     typedef ctag::FiltrationFactory<HeightFunction, Filtration> FiltrationFactory;
 };

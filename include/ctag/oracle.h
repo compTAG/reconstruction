@@ -3,31 +3,32 @@
 
 #include <iostream>
 
-#include <dionysus/filtration.h>
-#include <dionysus/simplex.h>
+#include "ctag/types.h"
 
-#include "ctag/point.h"
+#include "ctag/diagram.h"
 #include "ctag/height_function.h"
 #include "ctag/filtration_factory.h"
-#include "ctag/diagram.h"
 #include "ctag/diagram_factory.h"
 
 namespace ctag {
 
 class Oracle {
+protected:
+    typedef ctag::Types Types;
+
 public:
-    typedef float Coordinate;
-    typedef ctag::Point<Coordinate, 2> Point;
-    typedef Point Direction;
-    typedef dionysus::Simplex<Point> Simplex;
+    typedef Types::Coordinate Coordinate;
+    typedef Types::Point Point;
+    typedef Types::Direction Direction;
+    typedef Types::Simplex Simplex;
     typedef ctag::Diagram Diagram;
 
 protected:
-    typedef dionysus::Filtration<Simplex> Filtration;
+    typedef Types::CompTopology CompTopology;
+    typedef CompTopology::Filtration Filtration;
     typedef ctag::HeightFunction<Simplex, Direction> HeightFunction;
     typedef ctag::FiltrationFactory<HeightFunction, Filtration> FiltrationFactory;
-    typedef ctag::DiagramFactory<HeightFunction, Filtration> DiagramFactory;
-    typedef dionysus::Z2Field K;
+    typedef ctag::DiagramFactory<CompTopology> DiagramFactory;
 
     std::vector<Simplex> _simplices;
 

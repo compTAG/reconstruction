@@ -1,20 +1,26 @@
 #include <gtest/gtest.h>
 
+#include "ctag/types.h"
+#include "ctag/height_function.h"
+#include "ctag/filtration_factory.h"
+
 #include "ctag/diagram.h"
 #include "ctag/diagram_factory.h"
 
 class DiagramFactoryTest : public ::testing::Test {
 public:
-    typedef float Coordinate;
-    typedef ctag::Point<Coordinate, 2> Point;
-    typedef Point Direction;
-    typedef dionysus::Simplex<Point> Simplex;
-    typedef dionysus::Filtration<Simplex> Filtration;
+    typedef ctag::Types Types;
+    typedef Types::Point Point;
+    typedef Types::Direction Direction;
+    typedef Types::Simplex Simplex;
     typedef ctag::HeightFunction<Simplex, Direction> HeightFunction;
+
+    typedef Types::CompTopology CompTopology;
+    typedef CompTopology::Filtration Filtration;
     typedef ctag::FiltrationFactory<HeightFunction, Filtration> FiltrationFactory;
 
     typedef ctag::Diagram Diagram;
-    typedef ctag::DiagramFactory<HeightFunction, Filtration> DiagramFactory;
+    typedef ctag::DiagramFactory<CompTopology> DiagramFactory;
 };
 
 TEST_F(DiagramFactoryTest, constructor) {
