@@ -45,21 +45,21 @@ public:
 
     dim_const_iterator begin(uint dim) const {
         assert_dim(dim);
-        return _points[dim].begin();
+        return _points[dim].cbegin();
     }
 
     dim_const_iterator end(uint dim) const {
         assert_dim(dim);
-        return _points[dim].end();
+        return _points[dim].cend();
     }
 
     friend std::ostream& operator<<(std::ostream& out, const Diagram& d) {
         for (int i = 0 ; i < d.num_diagrams() ; ++i) {
             out << "Dimension " << i << std::endl;
 
-            for (dim_const_iterator pair = d.begin(i) ; pair != d.end(i); ++pair) {
-                out << "  " << *pair << std::endl;
-            }
+            std::for_each(d.begin(i), d.end(i), [&](const Pair& pair) {
+                out << "  " << pair << std::endl;
+            });
         }
         return out;
     }
