@@ -12,19 +12,37 @@ public:
     typedef Oracle::Simplex Simplex;
 
     typedef ctag::VertexReconstructor<Oracle> VertexReconstructor;
+    typedef VertexReconstructor::Vertices Vertices;
 };
 
 TEST_F(VertexReconstructorTest, reconstruct_basic_example) {
-    Simplex v1({Point({0,0})});
-    Simplex v2({Point({2,2})});
-    Simplex v3({Point({1,3})});
-    Simplex v4({Point({4,1})});
-    Simplex v5({Point({5,2.1})});
-    Simplex v6({Point({6,1.1})});
-    Oracle oracle({ v1, v2, v3, v4, v5, v6 });
+    std::vector<Simplex> simplices = {
+        Simplex({Point({0,0})}),
+        Simplex({Point({2,2})}),
+        Simplex({Point({1,3})}),
+        Simplex({Point({4,1})}),
+        Simplex({Point({5,2.1})}),
+        Simplex({Point({6,1.1})})
+    };
+    Oracle oracle(simplices.begin(), simplices.end());
 
     VertexReconstructor reconstructor;
-    reconstructor.reconstruct(oracle);
+    Vertices verts = reconstructor.reconstruct(oracle);
 
-    EXPECT_EQ(0, 0);
+    EXPECT_EQ(simplices.size(), verts.size());
+
+    // for each vertex, we check if the vertex is in the initial simplex set.
+    // if we find it in the set, we remove it from the simplex set.
+    // Since we know:
+    // 1. the number of verts and simplicies are the same (previous test)
+    // 2. each vertex is "close enough" to a unique vertex in the simplex set
+    // all verts have been found
+    double eps = .0001;
+    for (auto v : verts) {
+        auto result = find_if(simplices.begin(), simplices.end(),
+            [&](const Simplex& s) { return v.dist(*(s.begin())) < eps; }
+        );
+        EXPECT_NE(simplices.end(), result);
+        simplices.erase(result);
+    }
 };
