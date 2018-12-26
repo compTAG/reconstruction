@@ -21,6 +21,8 @@ public:
         for (size_t i = 0; i < D; ++i) { (*this)[i] = p[i]; }
     }
 
+    unsigned dim() const { return D; }
+
     Coordinate dist(const Point& p) {
         Coordinate acc = 0;
         for (size_t i = 0; i < D; ++i) {
