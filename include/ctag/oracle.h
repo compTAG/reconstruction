@@ -43,7 +43,7 @@ public:
     template<class Iterator>
     Oracle(Iterator begin, Iterator end) : _simplices(begin, end) {}
 
-    Diagram diagram(const Direction& d) {
+    Diagram diagram(const Direction& d) const {
         HeightFunction f(d);
 
         FiltrationFactory factory = make_filtration_factory();
