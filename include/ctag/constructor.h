@@ -4,8 +4,6 @@
 #include <boost/qvm/mat.hpp>
 #include <boost/qvm/mat_operations.hpp>
 
-#include "ctag/types.h"
-
 namespace ctag {
 class Constructor {
 public:
@@ -40,6 +38,21 @@ public:
         });
 
         return p;
+    }
+
+    /**
+     * This function assumes that l1 and l2 are distinct and not parallel
+     * Lines as distinct are not chedked.
+     * */
+    template<class Point>
+    static double distance(const Point& p1, const Point& p2) {
+        double acc = 0;
+
+        for (size_t i = 0; i < p1.dim() ; ++i) {
+            double diff = p1[i] - p2[i];
+            acc += diff*diff;
+        }
+        return std::sqrt(acc);
     }
 };
 };

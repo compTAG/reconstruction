@@ -22,3 +22,12 @@ TEST_F(ConstructorTest, intersect) {
     EXPECT_NEAR(4, p[0], .001);
     EXPECT_NEAR(1, p[1], .001);
 };
+
+TEST_F(ConstructorTest, dist) {
+    Point p1({0,1});
+    Point p2({2,0});
+
+    double dist = Constructor::distance(p1, p2);
+    EXPECT_NEAR(std::sqrt(5), dist, .00001);
+};
+
