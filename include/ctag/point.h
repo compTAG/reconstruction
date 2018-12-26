@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <array>
+#include <cmath>
 
 // adapted and stripped down version of point from Dionysus
 namespace ctag {
@@ -18,6 +19,15 @@ public:
     template<class T>
     Point(const Point<T, D>& p) {
         for (size_t i = 0; i < D; ++i) { (*this)[i] = p[i]; }
+    }
+
+    Coordinate dist(const Point& p) {
+        Coordinate acc = 0;
+        for (size_t i = 0; i < D; ++i) {
+            Coordinate diff = (*this)[i] - p[i];
+            acc += diff*diff;
+        }
+        return std::sqrt(acc);
     }
 
     using ArrayParent::operator[];
