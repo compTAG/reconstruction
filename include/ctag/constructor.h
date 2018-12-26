@@ -18,6 +18,10 @@ protected:
 
 public:
 
+    /**
+     * This function assumes that l1 and l2 are distinct and not parallel
+     * Lines as distinct are not chedked.
+     * */
     template<class Line>
     static Point intersect(const Line& l1, const Line& l2) {
         Matrix x = {l1.b(),l1.c(), l2.b(), l2.c()};
@@ -27,6 +31,8 @@ public:
         double det_x = det(x);
         double det_y = det(y);
         double det_z = det(z);
+
+        assert(det_z != 0);
 
         Point p({
             static_cast<float>(det_x/det_z),
