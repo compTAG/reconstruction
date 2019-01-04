@@ -7,7 +7,9 @@
 namespace ctag {
 class Constructor {
 public:
+    typedef ctag::Types::Coordinate Coordinate;
     typedef ctag::Types::Point Point;
+    typedef ctag::Types::Direction Direction;
 
 protected:
     typedef boost::qvm::mat<double,2,2> Matrix;
@@ -33,8 +35,8 @@ public:
         assert(det_z != 0);
 
         Point p({
-            static_cast<float>(det_x/det_z),
-            static_cast<float>(-det_y/det_z)
+            static_cast<Coordinate>(det_x/det_z),
+            static_cast<Coordinate>(-det_y/det_z)
         });
 
         return p;
