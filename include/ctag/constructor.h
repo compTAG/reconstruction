@@ -24,9 +24,9 @@ public:
      * */
     template<class Line>
     static Point intersect(const Line& l1, const Line& l2) {
-        Matrix x = {l1.b(),l1.c(), l2.b(), l2.c()};
-        Matrix y = {l1.a(),l1.c(), l2.a(), l2.c()};
-        Matrix z = {l1.a(),l1.b(), l2.a(), l2.b()};
+        Matrix x = { l1.b(), l1.c(), l2.b(), l2.c() };
+        Matrix y = { l1.a(), l1.c(), l2.a(), l2.c() };
+        Matrix z = { l1.a(), l1.b(), l2.a(), l2.b() };
 
         double det_x = det(x);
         double det_y = det(y);
