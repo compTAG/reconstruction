@@ -56,6 +56,51 @@ public:
         }
         return std::sqrt(acc);
     }
+
+    template<class InputIter>
+    static double min_angle(InputIter v, InputIter begin, InputIter end) {
+        typedef std::pair< double, Direction > PolarAngle;
+
+        std::vector< PolarAngle > angles;
+        for (InputIter vi = begin; vi != end; ++vi) {
+            if (v == vi) { continue; }
+
+            double dx = (*vi)[0] - (*v)[0];
+            double dy = (*vi)[1] - (*v)[1];
+            double a = std::atan(dy / dx);
+            angles.push_back( PolarAngle(a, Direction({dx, dy}) ));
+        }
+
+        std::sort(angles.begin(), angles.end(),
+            [](const PolarAngle& a, const PolarAngle& b) { return a.first < b.first; }
+        );
+
+        double min_theta = 2*M_PI;
+
+        auto vi = angles.begin();
+        auto vim1 = angles.end() - 1;
+        while (vi != angles.end()) {
+            const Point& cur = vi->second;
+            const Point& prev = (vim1)->second;
+
+            double a_dot_b = cur * prev;
+            double norm_a = sqrt(cur * cur);
+            double norm_b = sqrt(prev * prev);
+            double theta = std::acos(a_dot_b / (norm_a*norm_b));
+
+            double ccw = prev[0] * cur[1] - prev[1] * cur[0];
+            if (ccw < 0) {
+                theta = 2*M_PI - theta;
+            }
+            min_theta = std::min(min_theta, theta);
+
+            vim1 = vi;
+            ++vi;
+        }
+
+        return min_theta;
+    }
+
 };
 };
 
