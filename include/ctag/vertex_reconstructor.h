@@ -72,6 +72,8 @@ public:
         double x = width;
         double y = height;
         double norm = width*width + height*height;
+        std::cout << x << '\n';
+        std::cout << y << '\n';
         return Direction({
             static_cast<float>(width/norm),
             static_cast<float>(height/norm)

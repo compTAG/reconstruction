@@ -46,3 +46,37 @@ TEST_F(VertexReconstructorTest, reconstruct_basic_example) {
         simplices.erase(result);
     }
 };
+
+
+TEST_F(VertexReconstructorTest, reconstruct_basic_example2) {
+    std::vector<Simplex> simplices = {
+        Simplex({Point({-1,0})}),
+        Simplex({Point({2,2})}),
+        Simplex({Point({1,3})}),
+        Simplex({Point({4,1})}),
+        Simplex({Point({5,2.000001})}),
+        Simplex({Point({5,2.0})})
+    };
+    Oracle oracle(simplices.begin(), simplices.end());
+
+    VertexReconstructor reconstructor;
+    Vertices verts = reconstructor.reconstruct(oracle);
+
+    EXPECT_EQ(simplices.size(), verts.size());
+
+    // for each vertex, we check if the vertex is in the initial simplex set.
+    // if we find it in the set, we remove it from the simplex set.
+    // Since we know:
+    // 1. the number of verts and simplicies are the same (previous test)
+    // 2. each vertex is "close enough" to a unique vertex in the simplex set
+    // all verts have been found
+    double eps = .0001;
+    for (auto v : verts) {
+        auto result = find_if(simplices.begin(), simplices.end(),
+            [&](const Simplex& s) { return v.dist(*(s.begin())) < eps; }
+        );
+        EXPECT_NE(simplices.end(), result);
+        simplices.erase(result);
+    }
+};
+

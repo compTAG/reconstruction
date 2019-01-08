@@ -35,13 +35,33 @@ protected:
 protected:
     FiltrationFactory make_filtration_factory() const { return FiltrationFactory(); }
     DiagramFactory make_diagram_factory() const { return DiagramFactory(); }
+    bool check_general_position_assumption() const {
+        int i, j, k;
+        std::vector<double> x_coords;
+        std::vector<Point> points;
+        for(i = 0; i < _simplices.size(); i++){
+            for(j = 0; j < 3; j++){
+                points.push_back(_simplices[i][j]);
+            }
+        }
+        for(k = 0; k < points.size(); k++){
+            std::cout << points[k] << std::endl;
+        }
+        //vector<double> x_coords;
+        //vector<double> y_coords;
+        //vector<Point> all_points;
+        return 0;
+    }
 
 public:
-    Oracle(const std::initializer_list<Simplex>& simplices) :
-        Oracle(std::begin(simplices), std::end(simplices)) {}
+    Oracle(const std::initializer_list<Simplex>& x) :
+        Oracle(std::begin(x), std::end(x)) {}
 
     template<class Iterator>
-    Oracle(Iterator begin, Iterator end) : _simplices(begin, end) {}
+    Oracle(Iterator begin, Iterator end) : _simplices(begin, end) {
+        check_general_position_assumption();
+        //assert(...); 
+    }
 
     Diagram diagram(const Direction& d) const {
         HeightFunction f(d);
