@@ -5,10 +5,14 @@
 #include <vector>
 #include <cassert>
 
+#include "ctag/types.h"
+
 namespace ctag {
 
 class Diagram {
 public:
+    typedef ctag::Types::Direction Direction;
+
     /**
      * Representation of a point in a persistence diagram
      */
@@ -25,6 +29,7 @@ public:
 protected:
     typedef std::vector< Pair > DgmOfDim;
     std::array< DgmOfDim , 2 > _points;
+    Direction _direction;
 
     void assert_dim(uint dim) const {
         assert(0 <= dim && dim <= 1);
@@ -34,7 +39,7 @@ public:
 
     typedef DgmOfDim::const_iterator dim_const_iterator;
 
-    Diagram() {}
+    Diagram(const Direction& d) : _direction(d) {}
 
     void push_back(double birth, double death, uint dim) {
         assert_dim(dim);
@@ -42,6 +47,8 @@ public:
     }
 
     uint num_diagrams() const { return _points.size(); }
+
+    Direction direction() const { return _direction; }
 
     dim_const_iterator begin(uint dim) const {
         assert_dim(dim);

@@ -23,7 +23,7 @@ public:
     typedef ctag::DiagramFactory<CompTopology> DiagramFactory;
 };
 
-TEST_F(DiagramFactoryTest, constructor) {
+TEST_F(DiagramFactoryTest, make_diagram) {
     Direction d({1,0});
     HeightFunction f(d);
 
@@ -45,6 +45,9 @@ TEST_F(DiagramFactoryTest, constructor) {
 
     DiagramFactory diagram_factory;
     Diagram diagram = diagram_factory.make_diagram(f, filtration);
+
+    // check the direction
+    EXPECT_EQ(d, diagram.direction());
 
     // Check 0th diagram
     Diagram::dim_const_iterator pair = diagram.begin(0);

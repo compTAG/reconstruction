@@ -18,8 +18,8 @@ public:
 };
 
 TEST_F(FiltrationLineFactoryTest, make_filtration_lines) {
-
-    Diagram diagram;
+    Direction direction({0, 1});
+    Diagram diagram(direction);
     diagram.push_back(4, 0, 0);
     diagram.push_back(6, 10, 0);
     diagram.push_back(2, 20, 0);
@@ -27,12 +27,10 @@ TEST_F(FiltrationLineFactoryTest, make_filtration_lines) {
     diagram.push_back(1, 40, 0);
     diagram.push_back(5, 50, 0);
 
-    Direction direction({0, 1});
-
     FiltrationLineFactory factory;
 
     Lines lines;
-    factory.make_filtration_lines(std::back_inserter(lines), diagram, direction);
+    factory.make_filtration_lines(std::back_inserter(lines), diagram);
 
     Lines::const_iterator line = lines.begin();
     EXPECT_EQ(0, line->a());
