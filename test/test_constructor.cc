@@ -1,3 +1,5 @@
+#include <cmath>
+
 #include <gtest/gtest.h>
 
 #include "ctag/types.h"
@@ -29,5 +31,20 @@ TEST_F(ConstructorTest, dist) {
 
     double dist = Constructor::distance(p1, p2);
     EXPECT_NEAR(std::sqrt(5), dist, .00001);
+};
+
+TEST_F(ConstructorTest, min_angle) {
+    Point p1({3,2});
+    Point p2({2,1});
+    Point p3({3,-1});
+    Point p4({2,3});
+
+    std::vector<Point> points = {p1, p2, p3, p4 };
+
+    double min_angle = Constructor::min_angle(
+            points.begin()+1,
+            points.begin(), points.end());
+
+    EXPECT_NEAR(M_PI/4., min_angle, .00001);
 };
 

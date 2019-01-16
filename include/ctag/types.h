@@ -8,7 +8,7 @@ namespace ctag {
 
 class Types {
 public:
-    typedef float Coordinate;
+    typedef double Coordinate;
     typedef ctag::Point<Coordinate, 2> Point;
     typedef Point Direction;
 
