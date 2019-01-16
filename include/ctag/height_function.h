@@ -46,6 +46,8 @@ public:
         }
         return simplex_value;
     }
+
+    Direction direction() const { return _direction; }
 };
 
 };

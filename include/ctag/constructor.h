@@ -4,6 +4,9 @@
 #include <boost/qvm/mat.hpp>
 #include <boost/qvm/mat_operations.hpp>
 
+#include "ctag/types.h"
+#include "ctag/diagram.h"
+
 namespace ctag {
 class Constructor {
 public:
@@ -15,6 +18,8 @@ protected:
     typedef boost::qvm::mat<double,2,2> Matrix;
 
     static double det(const Matrix& m) { return boost::qvm::determinant(m); }
+
+    constexpr static double EPS = 1e-6;
 
 public:
 
@@ -105,6 +110,19 @@ public:
         return min_theta;
     }
 
+    static int in_degree(const Diagram& d, const Point& v) {
+        double c = v * d.direction();
+
+        int d0 = std::count_if(d.begin(0), d.end(0),
+            [c](const Diagram::Pair& p) { return p.death - c < EPS; }
+        );
+
+        int d1 = std::count_if(d.begin(1), d.end(1),
+            [c](const Diagram::Pair& p) { return p.birth - c < EPS; }
+        );
+
+        return d0 + d1;
+    }
 };
 };
 

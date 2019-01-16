@@ -6,6 +6,7 @@
 #include "ctag/filtration_line.h"
 
 #include "ctag/constructor.h"
+#include "ctag/oracle.h"
 
 
 class ConstructorTest : public ::testing::Test {
@@ -14,6 +15,10 @@ public:
     typedef ctag::Types::Direction Direction;
     typedef ctag::FiltrationLine<Direction> FiltrationLine;
     typedef ctag::Constructor Constructor;
+    typedef ctag::Diagram Diagram;
+
+    typedef ctag::Oracle Oracle;
+    typedef Oracle::Simplex Simplex;
 };
 
 TEST_F(ConstructorTest, intersect) {
@@ -46,5 +51,30 @@ TEST_F(ConstructorTest, min_angle) {
             points.begin(), points.end());
 
     EXPECT_NEAR(M_PI/4., min_angle, .00001);
+};
+
+TEST_F(ConstructorTest, in_degree) {
+    Point p1({0,0});
+    Point p2({2,2});
+    Point p3({1,3});
+    Point p4({4,1});
+
+    Simplex et3({p2, p3});
+    Simplex et2({p2, p1});
+    Simplex e1({p2, p4});
+
+    Oracle oracle({ et3, et2, e1 });
+
+    Diagram diagram = oracle.diagram(Direction({0,1}));
+    EXPECT_EQ(2, Constructor::in_degree(diagram, p2));
+
+    diagram = oracle.diagram(Direction({1,0}));
+    EXPECT_EQ(2, Constructor::in_degree(diagram, p2));
+
+    diagram = oracle.diagram(Direction({-1,0}));
+    EXPECT_EQ(1, Constructor::in_degree(diagram, p2));
+
+    diagram = oracle.diagram(Direction({0,-1}));
+    EXPECT_EQ(1, Constructor::in_degree(diagram, p2));
 };
 
