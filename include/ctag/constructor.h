@@ -57,6 +57,10 @@ public:
         return std::sqrt(acc);
     }
 
+    static double max_angle() {
+        return 2*M_PI;
+    }
+
     template<class InputIter>
     static double min_angle(InputIter v, InputIter begin, InputIter end) {
         typedef std::pair< double, Direction > PolarAngle;
@@ -75,7 +79,7 @@ public:
             [](const PolarAngle& a, const PolarAngle& b) { return a.first < b.first; }
         );
 
-        double min_theta = 2*M_PI;
+        double min_theta = max_angle();
 
         auto vi = angles.begin();
         auto vim1 = angles.end() - 1;
