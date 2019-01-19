@@ -15,6 +15,7 @@
 
 #include "test_vertex_reconstructor.cc"
 #include "test_edge_reconstructor.cc"
+#include "test_reconstructor.cc"
 
 #include "test_euler_characteristic_curve.cc"
 #include "test_euler_characteristic_curve_factory.cc"
