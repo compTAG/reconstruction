@@ -5,16 +5,21 @@
 class DiagramTest : public ::testing::Test {
 public:
     typedef ctag::Diagram Diagram;
+
+    typedef Diagram::Direction Direction;
 };
 
 TEST_F(DiagramTest, constructor) {
-    Diagram diagram;
+    Direction d({2,1});
+    Diagram diagram(d);
 
-    EXPECT_EQ(0, 0);
+    EXPECT_EQ(2, diagram.direction()[0]);
+    EXPECT_EQ(1, diagram.direction()[1]);
 };
 
 TEST_F(DiagramTest, push_back) {
-    Diagram diagram;
+    Direction d({2,1});
+    Diagram diagram(d);
 
     diagram.push_back(0, 1, 1);
     diagram.push_back(3, 4, 0);
@@ -39,7 +44,8 @@ TEST_F(DiagramTest, push_back) {
 };
 
 TEST_F(DiagramTest, push_back_dim_out_of_bounds_fail) {
-    Diagram diagram;
+    Direction d({2,1});
+    Diagram diagram(d);
 
     ASSERT_DEATH({
         diagram.push_back(0, 1, 4);
@@ -47,7 +53,8 @@ TEST_F(DiagramTest, push_back_dim_out_of_bounds_fail) {
 }
 
 TEST_F(DiagramTest, begin_dim_out_of_bounds_fail) {
-    Diagram diagram;
+    Direction d({2,1});
+    Diagram diagram(d);
 
     ASSERT_DEATH({
         diagram.begin(3);
@@ -55,16 +62,10 @@ TEST_F(DiagramTest, begin_dim_out_of_bounds_fail) {
 }
 
 TEST_F(DiagramTest, end_dim_out_of_bounds_fail) {
-    Diagram diagram;
+    Direction d({2,1});
+    Diagram diagram(d);
 
     ASSERT_DEATH({
         diagram.end(2);
     }, "");
 }
-
-
-
-
-
-
-

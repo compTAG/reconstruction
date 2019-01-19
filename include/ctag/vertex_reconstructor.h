@@ -32,10 +32,9 @@ public:
     typedef typename std::vector<Point> Vertices;
 
     void fill_filtration_lines(FiltrationLines& lines,
-            const Diagram &diagram, const Direction& direction) const {
+            const Diagram &diagram) const {
         FiltrationLineFactory factory;
-        factory.make_filtration_lines(
-                std::back_inserter(lines), diagram, direction);
+        factory.make_filtration_lines(std::back_inserter(lines), diagram);
     }
 
     double get_width(FiltrationLines& lines, const Oracle& oracle) const {
@@ -47,7 +46,7 @@ public:
         double min = minmax.first->birth;
         double max = minmax.second->birth;
 
-        fill_filtration_lines(lines, diagram, d1);
+        fill_filtration_lines(lines, diagram);
         return max - min;
     }
 
@@ -69,8 +68,6 @@ public:
     }
 
     Direction get_direction(double width, double height) const {
-        double x = width;
-        double y = height;
         double norm = width*width + height*height;
         std::cout << x << '\n';
         std::cout << y << '\n';
@@ -84,7 +81,7 @@ public:
     void filtration_lines_for_direction(FiltrationLines& lines,
             const Oracle& oracle, const Direction& direction) const {
         Diagram diagram = oracle.diagram(direction);
-        fill_filtration_lines(lines, diagram, direction);
+        fill_filtration_lines(lines, diagram);
     }
 
 

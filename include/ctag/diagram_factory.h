@@ -22,7 +22,7 @@ public:
 
     template< class HeightFunction, class Filtration>
     Diagram make_diagram(const HeightFunction& f, const Filtration& filtration) {
-        Diagram diagram;
+        Diagram diagram(f.direction());
 
         Persistence persistence(_k);
         PersistenceReducer reduce(persistence);
