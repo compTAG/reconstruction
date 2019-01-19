@@ -1,5 +1,6 @@
 #include "gtest/gtest.h"
 
+#include "test_point.cc"
 #include "test_height_function.cc"
 #include "test_filtration_factory.cc"
 #include "test_diagram.cc"

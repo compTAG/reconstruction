@@ -34,6 +34,12 @@ public:
 
     using ArrayParent::operator[];
 
+    bool operator<(const Point& p) const {
+        size_t i = 0;
+        while (i < D && (*this)[i] == p[i]) { ++i; }
+        return (*this)[i] < p[i];
+    }
+
     friend
     std::ostream& operator<<(std::ostream& out, const Point& p) {
         out << p[0];
