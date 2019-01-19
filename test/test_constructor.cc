@@ -78,3 +78,16 @@ TEST_F(ConstructorTest, in_degree) {
     EXPECT_EQ(1, Constructor::in_degree(diagram, p2));
 };
 
+TEST_F(ConstructorTest, bowtie_directions) {
+    Point p1({5,1});
+    Point p2({5,2});
+
+    std::pair<Direction, Direction> directions =
+        Constructor::bowtie_directions(M_PI/10., p1, p2);
+
+    EXPECT_NEAR(0.999507, directions.first[0], .000001);
+    EXPECT_NEAR(0.0314107, directions.first[1], .000001);
+
+    EXPECT_NEAR(0.999507, directions.second[0], .000001);
+    EXPECT_NEAR(-0.0314107, directions.second[1], .000001);
+}

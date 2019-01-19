@@ -4,6 +4,13 @@
 #include <boost/qvm/mat.hpp>
 #include <boost/qvm/mat_operations.hpp>
 
+#include <boost/qvm/vec.hpp>
+#include <boost/qvm/vec_operations.hpp>
+#include <boost/qvm/vec_access.hpp>
+#include <boost/qvm/vec_mat_operations.hpp>
+
+#include <boost/qvm/map_mat_mat.hpp>
+
 #include "ctag/types.h"
 #include "ctag/diagram.h"
 
@@ -16,6 +23,7 @@ public:
 
 protected:
     typedef boost::qvm::mat<double,2,2> Matrix;
+    typedef boost::qvm::vec<double,2> Vector;
 
     static double det(const Matrix& m) { return boost::qvm::determinant(m); }
 
@@ -114,14 +122,33 @@ public:
         double c = v * d.direction();
 
         int d0 = std::count_if(d.begin(0), d.end(0),
-            [c](const Diagram::Pair& p) { return p.death - c < EPS; }
+            [c](const Diagram::Pair& p) { return std::abs(p.death - c) < EPS; }
         );
 
         int d1 = std::count_if(d.begin(1), d.end(1),
-            [c](const Diagram::Pair& p) { return p.birth - c < EPS; }
+            [c](const Diagram::Pair& p) { return std::abs(p.birth - c) < EPS; }
         );
 
         return d0 + d1;
+    }
+
+    static std::pair<Direction, Direction> bowtie_directions(double bowtie_angle,
+            const Point& p, const Point& q) {
+
+            Vector v = {p[0] - q[0], p[1] - q[1]};
+            boost::qvm::normalize(v);
+
+            Vector v_perp = {-boost::qvm::Y(v), boost::qvm::X(v)};
+
+            double theta = bowtie_angle / 10.;
+            Matrix rot = { cos(theta), -sin(theta), sin(theta), cos(theta) };
+            Vector d1 = rot * v_perp;
+            Vector d2 = transposed(rot) * v_perp;
+
+            return std::pair<Direction, Direction>(
+                    Direction({ boost::qvm::X(d1), boost::qvm::Y(d1) }),
+                    Direction({ boost::qvm::X(d2), boost::qvm::Y(d2) }));
+
     }
 };
 };
