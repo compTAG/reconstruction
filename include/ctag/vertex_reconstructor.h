@@ -21,8 +21,8 @@ protected:
     typedef typename Oracle::Diagram Diagram;
     typedef typename Diagram::Pair Pair;
 
-    typedef FiltrationLine<Direction> FiltrationLine;
-    typedef FiltrationLineFactory<FiltrationLine, Diagram> FiltrationLineFactory;
+    typedef ctag::FiltrationLine<Direction> FiltrationLine;
+    typedef ctag::FiltrationLineFactory<FiltrationLine, Diagram> FiltrationLineFactory;
     typedef std::vector<FiltrationLine> FiltrationLines;
 
     typedef typename Oracle::Point Point;
