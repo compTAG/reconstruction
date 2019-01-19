@@ -32,7 +32,6 @@ public:
         int in_degree2 = Constructor::in_degree(diagram, p);
 
         int diff = std::abs(in_degree2 - in_degree1);
-        std::cout << diff << std::endl;
         assert(diff <= 1);
 
         return diff > 0;
