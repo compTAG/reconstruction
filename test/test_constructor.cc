@@ -85,9 +85,9 @@ TEST_F(ConstructorTest, bowtie_directions) {
     std::pair<Direction, Direction> directions =
         Constructor::bowtie_directions(M_PI/10., p1, p2);
 
-    EXPECT_NEAR(0.987688, directions.first[0], .000001);
-    EXPECT_NEAR(0.156434, directions.first[1], .000001);
+    EXPECT_NEAR(0.999507, directions.first[0], .000001);
+    EXPECT_NEAR(0.0314107, directions.first[1], .000001);
 
-    EXPECT_NEAR(0.987688, directions.second[0], .000001);
-    EXPECT_NEAR(-0.156434, directions.second[1], .000001);
+    EXPECT_NEAR(0.999507, directions.second[0], .000001);
+    EXPECT_NEAR(-0.0314107, directions.second[1], .000001);
 }
