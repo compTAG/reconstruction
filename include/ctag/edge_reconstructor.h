@@ -18,14 +18,11 @@ protected:
     double get_bowtie_angle(InputIter verts_begin, InputIter verts_end) const {
         double min = Constructor::max_angle();
         for (InputIter vi = verts_begin ; vi != verts_end ; ++vi) {
-            double cur_min = Constructor::min_angle(vi, vi+1, verts_end);
+            double cur_min = Constructor::min_angle(vi, verts_begin, verts_end);
             min = std::min(min, cur_min);
         }
         return min;
     }
-
-
-
 
 public:
     template <class OutputIter, class InputIter>
