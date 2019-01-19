@@ -122,11 +122,11 @@ public:
         double c = v * d.direction();
 
         int d0 = std::count_if(d.begin(0), d.end(0),
-            [c](const Diagram::Pair& p) { return p.death - c < EPS; }
+            [c](const Diagram::Pair& p) { return std::abs(p.death - c) < EPS; }
         );
 
         int d1 = std::count_if(d.begin(1), d.end(1),
-            [c](const Diagram::Pair& p) { return p.birth - c < EPS; }
+            [c](const Diagram::Pair& p) { return std::abs(p.birth - c) < EPS; }
         );
 
         return d0 + d1;
