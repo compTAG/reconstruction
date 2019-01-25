@@ -5,7 +5,7 @@
 #include <../../dionysus-src/bindings/python/pybind11/include/pybind11/operators.h>
 namespace py = pybind11;
 
-#include "simplex.h"
+#include "reconstruction_tester.h"
 
 void init_simplex(py::module& m)
 {

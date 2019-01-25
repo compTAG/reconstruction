@@ -15,6 +15,5 @@ pybind11_add_module         (
                             _reconstruction reconstruction.cpp
                              test.cpp
                              point.cpp
-                             simplex.cpp
                             )
 set_target_properties       (_reconstruction PROPERTIES OUTPUT_NAME reconstruction/_reconstruction)
