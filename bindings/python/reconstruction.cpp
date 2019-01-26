@@ -4,6 +4,7 @@ namespace py = pybind11;
 
 void init_simple(py::module&);
 void init_point(py::module&);
+void init_reconstruction_tester(py::module&);
 
 PYBIND11_MODULE(_reconstruction, m)
 {
@@ -11,4 +12,5 @@ PYBIND11_MODULE(_reconstruction, m)
 
     init_simple(m);
     init_point(m);
+    init_reconstruction_tester(m);
 }

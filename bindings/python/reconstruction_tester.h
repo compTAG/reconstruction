@@ -3,6 +3,9 @@
 
 // #include "ctag/oracle.h"
 
+#include<vector>
+namespace ctag {
+
 class ReconstructionTester {
 private:
     // typedef ctag::Oracle Oracle;
@@ -61,4 +64,10 @@ public:
     }
 };
 
+};
+
 #endif
+
+#pragma once
+
+using PyReconstructionTester = ctag::ReconstructionTester;
