@@ -32,7 +32,5 @@ TEST_F(ReconstructorTest, reconstruct_basic_example) {
     Reconstructor reconstructor;
     reconstructor.reconstruct(std::back_inserter(result), oracle);
 
-    for (auto si : result) {
-        std::cout << si << std::endl;
-    }
+    EXPECT_TRUE(oracle.verify(result));
 };
