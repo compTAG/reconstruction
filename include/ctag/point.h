@@ -23,15 +23,6 @@ public:
 
     unsigned dim() const { return D; }
 
-    Coordinate dist(const Point& p) {
-        Coordinate acc = 0;
-        for (size_t i = 0; i < D; ++i) {
-            Coordinate diff = (*this)[i] - p[i];
-            acc += diff*diff;
-        }
-        return std::sqrt(acc);
-    }
-
     using ArrayParent::operator[];
 
     bool operator<(const Point& p) const {
