@@ -2,6 +2,7 @@
 
 #include "ctag/oracle.h"
 #include "ctag/vertex_reconstructor.h"
+#include "ctag/constructor.h"
 
 class VertexReconstructorTest : public ::testing::Test {
 public:
@@ -10,13 +11,16 @@ public:
     typedef Oracle::Point Point;
     typedef Oracle::Direction Direction;
     typedef Oracle::Simplex Simplex;
+    typedef Oracle::SimplicialComplex SimplicialComplex;
 
     typedef ctag::VertexReconstructor<Oracle> VertexReconstructor;
     typedef VertexReconstructor::Vertices Vertices;
+
+    typedef ctag::Constructor Constructor;
 };
 
 TEST_F(VertexReconstructorTest, reconstruct_basic_example) {
-    std::vector<Simplex> simplices = {
+    SimplicialComplex simplices = {
         Simplex({Point({0,0})}),
         Simplex({Point({2,2})}),
         Simplex({Point({1,3})}),
@@ -34,13 +38,12 @@ TEST_F(VertexReconstructorTest, reconstruct_basic_example) {
     // for each vertex, we check if the vertex is in the initial simplex set.
     // if we find it in the set, we remove it from the simplex set.
     // Since we know:
-    // 1. the number of verts and simplicies are the same (previous test)
+    // 1. the number of verts and simplices are the same (previous test)
     // 2. each vertex is "close enough" to a unique vertex in the simplex set
     // all verts have been found
-    double eps = .0001;
     for (auto v : verts) {
         auto result = find_if(simplices.begin(), simplices.end(),
-            [&](const Simplex& s) { return v.dist(*(s.begin())) < eps; }
+            [&](const Simplex& s) { return Constructor::point_eq(v, s[0]); }
         );
         EXPECT_NE(simplices.end(), result);
         simplices.erase(result);
