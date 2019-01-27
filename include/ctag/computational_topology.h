@@ -20,6 +20,7 @@ public:
     typedef dionysus::Z2Field Field;
     typedef dionysus::OrdinaryPersistence<Field> Persistence;
     typedef dionysus::StandardReduction<Persistence> PersistenceReducer;
+    typedef std::vector<Simplex> Complex;
 };
 
 };

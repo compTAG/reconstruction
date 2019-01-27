@@ -9,6 +9,7 @@ public:
 
     typedef Oracle::Point Point;
     typedef Oracle::Simplex Simplex;
+    typedef Oracle::Complex Complex;
 
     typedef ctag::EdgePredicate<Oracle> EdgePredicate;
 };
@@ -18,7 +19,7 @@ TEST_F(EdgePredicateTest, op) {
     Point p2({2,2});
     Point p3({1,3});
 
-    std::vector<Simplex> simplices = {
+    Complex simplices = {
         Simplex({p1, p2}),
         Simplex({p3})
     };
