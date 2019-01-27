@@ -35,7 +35,7 @@ TEST_F(VertexReconstructorTest, reconstruct_basic_example) {
     // for each vertex, we check if the vertex is in the initial simplex set.
     // if we find it in the set, we remove it from the simplex set.
     // Since we know:
-    // 1. the number of verts and simplicies are the same (previous test)
+    // 1. the number of verts and simplices are the same (previous test)
     // 2. each vertex is "close enough" to a unique vertex in the simplex set
     // all verts have been found
     double eps = .0001;
