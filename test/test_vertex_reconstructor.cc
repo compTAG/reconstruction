@@ -2,6 +2,7 @@
 
 #include "ctag/oracle.h"
 #include "ctag/vertex_reconstructor.h"
+#include "ctag/constructor.h"
 
 class VertexReconstructorTest : public ::testing::Test {
 public:
@@ -14,6 +15,8 @@ public:
 
     typedef ctag::VertexReconstructor<Oracle> VertexReconstructor;
     typedef VertexReconstructor::Vertices Vertices;
+
+    typedef ctag::Constructor Constructor;
 };
 
 TEST_F(VertexReconstructorTest, reconstruct_basic_example) {
@@ -38,10 +41,9 @@ TEST_F(VertexReconstructorTest, reconstruct_basic_example) {
     // 1. the number of verts and simplices are the same (previous test)
     // 2. each vertex is "close enough" to a unique vertex in the simplex set
     // all verts have been found
-    double eps = .0001;
     for (auto v : verts) {
         auto result = find_if(simplices.begin(), simplices.end(),
-            [&](const Simplex& s) { return v.dist(*(s.begin())) < eps; }
+            [&](const Simplex& s) { return Constructor::point_eq(v, s[0]); }
         );
         EXPECT_NE(simplices.end(), result);
         simplices.erase(result);
