@@ -1,5 +1,6 @@
 #include "gtest/gtest.h"
 
+#include "test_point.cc"
 #include "test_height_function.cc"
 #include "test_filtration_factory.cc"
 #include "test_diagram.cc"
@@ -14,6 +15,7 @@
 
 #include "test_vertex_reconstructor.cc"
 #include "test_edge_reconstructor.cc"
+#include "test_reconstructor.cc"
 
 #include "test_euler_characteristic_curve.cc"
 #include "test_euler_characteristic_curve_factory.cc"

@@ -28,6 +28,7 @@ protected:
     static double det(const Matrix& m) { return boost::qvm::determinant(m); }
 
     constexpr static double EPS = 1e-6;
+    constexpr static double CONSTRUCTION_EPS = 1e-4;
 
 public:
 
@@ -68,6 +69,11 @@ public:
             acc += diff*diff;
         }
         return std::sqrt(acc);
+    }
+
+    template<class Point>
+    static double point_eq(const Point& p1, const Point& p2) {
+        return Constructor::distance(p1, p2) < CONSTRUCTION_EPS;
     }
 
     static double max_angle() {

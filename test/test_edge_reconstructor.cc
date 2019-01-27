@@ -8,7 +8,6 @@ public:
     typedef ctag::Oracle Oracle;
 
     typedef Oracle::Point Point;
-    typedef Oracle::Direction Direction;
     typedef Oracle::Simplex Simplex;
 
     typedef ctag::EdgeReconstructor<Oracle> EdgeReconstructor;

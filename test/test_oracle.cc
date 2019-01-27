@@ -9,6 +9,7 @@ public:
     typedef Oracle::Point Point;
     typedef Oracle::Direction Direction;
     typedef Oracle::Simplex Simplex;
+    typedef Oracle::SimplicialComplex SimplicialComplex;
     typedef Oracle::Diagram Diagram;
 };
 
@@ -72,3 +73,32 @@ TEST_F(OracleTest, diagram) {
     EXPECT_EQ(diagram.end(1), pair);
 };
 
+TEST_F(OracleTest, verify) {
+    Point p1({0,0});
+    Point p2({2,2});
+    Point p3({1,3});
+    Point p3b({1,3.00005});
+    Point p3c({1,3.5});
+    Point p4({4,1});
+
+    Simplex et3({p2, p3});
+    Simplex et3b({p2, p3b});
+    Simplex et3c({p2, p3c});
+    Simplex et2({p2, p1});
+    Simplex e1({p2, p4});
+
+    Simplex en({p3, p4});
+
+    SimplicialComplex s1 = { et3, et2, e1 };
+    Oracle oracle(s1.begin(), s1.end());
+
+    SimplicialComplex s2 = { e1, et3, et2 };
+    SimplicialComplex s2b = { e1, et3b, et2 };
+    SimplicialComplex s2c = { e1, et3c, et2 };
+    SimplicialComplex s3 = { e1, et3, en };
+
+    EXPECT_TRUE(oracle.verify(s2));
+    EXPECT_TRUE(oracle.verify(s2b));
+    EXPECT_FALSE(oracle.verify(s2c));
+    EXPECT_FALSE(oracle.verify(s3));
+}
