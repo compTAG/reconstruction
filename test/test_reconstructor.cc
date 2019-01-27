@@ -9,7 +9,7 @@ public:
 
     typedef Oracle::Point Point;
     typedef Oracle::Simplex Simplex;
-    typedef Oracle::Complex Complex;
+    typedef Oracle::SimplicialComplex SimplicialComplex;
 
     typedef ctag::Reconstructor<Oracle> Reconstructor;
 };
@@ -28,7 +28,7 @@ TEST_F(ReconstructorTest, reconstruct_basic_example) {
 
     Oracle oracle({ t_e1, t_e2, t_e3, e1 });
 
-    Complex result;
+    SimplicialComplex result;
     Reconstructor reconstructor;
     reconstructor.reconstruct(std::back_inserter(result), oracle);
 

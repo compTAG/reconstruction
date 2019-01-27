@@ -10,14 +10,14 @@ public:
     typedef Oracle::Point Point;
     typedef Oracle::Direction Direction;
     typedef Oracle::Simplex Simplex;
-    typedef Oracle::Complex Complex;
+    typedef Oracle::SimplicialComplex SimplicialComplex;
 
     typedef ctag::VertexReconstructor<Oracle> VertexReconstructor;
     typedef VertexReconstructor::Vertices Vertices;
 };
 
 TEST_F(VertexReconstructorTest, reconstruct_basic_example) {
-    Complex simplices = {
+    SimplicialComplex simplices = {
         Simplex({Point({0,0})}),
         Simplex({Point({2,2})}),
         Simplex({Point({1,3})}),

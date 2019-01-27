@@ -14,7 +14,7 @@ public:
 
     typedef ctag::ComputationalTopology<Point> CompTopology;
     typedef CompTopology::Simplex Simplex;
-    typedef CompTopology::Complex Complex;
+    typedef CompTopology::SimplicialComplex SimplicialComplex;
 };
 };
 

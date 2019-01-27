@@ -21,7 +21,7 @@ public:
     typedef Types::Point Point;
     typedef Types::Direction Direction;
     typedef Types::Simplex Simplex;
-    typedef Types::Complex Complex;
+    typedef Types::SimplicialComplex SimplicialComplex;
     typedef ctag::Diagram Diagram;
 
 protected:
@@ -31,7 +31,7 @@ protected:
     typedef ctag::FiltrationFactory<HeightFunction, Filtration> FiltrationFactory;
     typedef ctag::DiagramFactory<CompTopology> DiagramFactory;
 
-    Complex _simplices;
+    SimplicialComplex _simplices;
 
 protected:
     FiltrationFactory make_filtration_factory() const { return FiltrationFactory(); }
