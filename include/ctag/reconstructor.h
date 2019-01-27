@@ -25,10 +25,6 @@ public:
         VertexReconstructor vert_reconstructor;
         Vertices verts = vert_reconstructor.reconstruct(oracle);
 
-        for (auto vert : verts) {
-            std::cout << vert << std::endl;
-        }
-
         Edges edges;
         EdgeReconstructor edge_reconstructor;
         edge_reconstructor.reconstruct(std::back_inserter(edges),
