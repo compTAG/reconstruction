@@ -1,11 +1,12 @@
 #ifndef _RECONSTRUCTION_RUNNER_H_
 #define _RECONSTRUCTION_RUNNER_H_
 
- #include "ctag/oracle.h"
- #include "ctag/reconstructor.h"
- #include "ctag/timer.h"
-
 #include <vector>
+
+#include "ctag/oracle.h"
+#include "ctag/reconstructor.h"
+#include "ctag/timer.h"
+
 namespace ctag {
 
 class ReconstructionRunner {

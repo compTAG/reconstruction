@@ -1,10 +1,6 @@
-
-
-#include <sstream>
-
-#include <../../dionysus-src/bindings/python/pybind11/include/pybind11/pybind11.h>
-#include <../../dionysus-src/bindings/python/pybind11/include/pybind11/stl.h>
-#include <../../dionysus-src/bindings/python/pybind11/include/pybind11/operators.h>
+#include <pybind11/pybind11.h>
+#include <pybind11/stl.h>
+#include <pybind11/operators.h>
 namespace py = pybind11;
 
 #include "reconstruction_runner.h"
