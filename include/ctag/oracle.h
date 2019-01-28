@@ -111,6 +111,11 @@ public:
     template<class Iterator>
     Oracle(Iterator begin, Iterator end) : _simplices(begin, end) {}
 
+    Oracle(const std::initializer_list<double>& coords,
+            const std::initializer_list<int>& edges) :
+        Oracle(std::begin(coords), std::end(coords),
+                std::begin(edges), std::end(edges)) {}
+
     template<class CoordIter, class EdgeIter>
     Oracle(CoordIter coords_begin, CoordIter coords_end,
             EdgeIter edges_begin, EdgeIter edges_end) {
@@ -123,10 +128,10 @@ public:
             assert(coord_i != coords_end);
             Coordinate y = *coord_i;
             points.push_back(Point({x, y}));
+            _simplices.push_back(Simplex({points.back()}));
             ++coord_i;
         }
 
-        SimplicialComplex simplices;
         auto edge_i = edges_begin;
         while (edge_i != edges_end) {
             int src = *edge_i;
