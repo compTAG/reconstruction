@@ -10,6 +10,7 @@
 #include "ctag/filtration_factory.h"
 #include "ctag/diagram_factory.h"
 #include "ctag/constructor.h"
+#include "ctag/timer.h"
 
 namespace ctag {
 
@@ -36,8 +37,8 @@ protected:
     typedef std::vector<Point> Points;
 
     SimplicialComplex _simplices;
+    mutable Timer _timer;
 
-protected:
     FiltrationFactory make_filtration_factory() const { return FiltrationFactory(); }
     DiagramFactory make_diagram_factory() const { return DiagramFactory(); }
 
@@ -111,6 +112,7 @@ public:
     Oracle(Iterator begin, Iterator end) : _simplices(begin, end) {}
 
     Diagram diagram(const Direction& d) const {
+        _timer.start();
         HeightFunction f(d);
 
         FiltrationFactory factory = make_filtration_factory();
@@ -119,6 +121,7 @@ public:
 
         DiagramFactory diagram_factory = make_diagram_factory();
         Diagram diagram = diagram_factory.make_diagram(f, filtration);
+        _timer.stop();
 
         return diagram;
     }
@@ -131,6 +134,10 @@ public:
         return verts_equal(begin, end, other_begin, other_end)
             && edges_subset(begin, end, other_begin, other_end)
             && edges_subset(other_begin, other_end, begin, end);
+    }
+
+    double nano_seconds() const {
+        return _timer.total();
     }
 };
 

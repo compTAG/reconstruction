@@ -2,6 +2,7 @@
 
 #include "ctag/oracle.h"
 #include "ctag/reconstructor.h"
+#include "ctag/timer.h"
 
 class ReconstructorTest : public ::testing::Test {
 public:
