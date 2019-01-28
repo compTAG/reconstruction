@@ -69,10 +69,7 @@ public:
 
     Direction get_direction(double width, double height) const {
         double norm = width*width + height*height;
-        return Direction({
-            static_cast<float>(width/norm),
-            static_cast<float>(height/norm)
-        });
+        return Direction({ width/norm, height/norm/2. });
     }
 
 
