@@ -128,9 +128,9 @@ public:
         auto end = _simplices.end();
         auto other_begin = other.begin();
         auto other_end = other.end();
-        return verts_equal(begin, end, other_begin, other_end);
-            //&& edges_subset(begin, end, other_begin, other_end)
-            //&& edges_subset(other_begin, other_end, begin, end);
+        return verts_equal(begin, end, other_begin, other_end)
+            && edges_subset(begin, end, other_begin, other_end)
+            && edges_subset(other_begin, other_end, begin, end);
     }
 };
 
