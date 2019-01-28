@@ -59,15 +59,18 @@ TEST_F(ReconstructorTest, reconstruct_verts_without_edges) {
     Point p1({12,45});
     Point p2({23,13});
 
-    Simplex s0({p0});
-    Simplex s1({p1});
-    Simplex s2({p2});
+    Simplex s0({p0, p1});
+    Simplex s1({p2});
 
-    Oracle oracle({ s0, s1, s2 });
+    // Oracle oracle({ s0, s1, s2 });
+    Oracle oracle({1, 4, 12, 45, 23, 13}, {0, 1});
 
     SimplicialComplex result;
     Reconstructor reconstructor;
     reconstructor.reconstruct(std::back_inserter(result), oracle);
 
     EXPECT_TRUE(oracle.verify(result));
+
+    Oracle oracle2({s0, s1});
+    EXPECT_TRUE(oracle2.verify(result));
 };
