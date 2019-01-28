@@ -50,7 +50,10 @@ protected:
             }
         }
         std::sort(points.begin(), points.end());
-        std::unique(points.begin(), points.end());
+
+        auto last = std::unique(points.begin(), points.end());
+        points.erase(last, points.end());
+
         return points;
     }
 
