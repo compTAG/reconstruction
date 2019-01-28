@@ -19,7 +19,6 @@
 
 #include "test_euler_characteristic_curve.cc"
 #include "test_euler_characteristic_curve_factory.cc"
-#include "test_reconstructor2.cc"
 
 int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);
