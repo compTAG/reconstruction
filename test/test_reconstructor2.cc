@@ -1,37 +1,25 @@
-#ifndef _RECONSTRUCTOR_TESTER_H_
-#define _RECONSTRUCTOR_TESTER_H_
+#include <gtest/gtest.h>
 
- #include "ctag/oracle.h"
- #include "ctag/reconstructor.h"
+#include "ctag/oracle.h"
+#include "ctag/reconstructor.h"
 
-#include<vector>
-namespace ctag {
-
-class ReconstructionTester {
-private:
-     typedef ctag::Oracle Oracle;
-     typedef Oracle::Point Point;
-     typedef Oracle::Simplex Simplex;
-     typedef Oracle::SimplicialComplex SimplicialComplex;
-
-     typedef ctag::Reconstructor<Oracle> Reconstructor;
-
-    // typedef ctag::Reconstructor<Oracle> Reconstructor;
-    //
-     //Oracle _oracle;
-
+class Reconstructor2Test : public ::testing::Test {
 public:
+    typedef ctag::Oracle Oracle;
 
-    ReconstructionTester(std::vector<double> coords,
-            std::vector<int> edges) {
+    typedef Oracle::Point Point;
+    typedef Oracle::Simplex Simplex;
+    typedef Oracle::SimplicialComplex SimplicialComplex;
 
-        // Importing two vectors seems to work... Uncomment to see
-        //for (auto c : coords) { std::cout << c; }
-        //std::cout << std::endl;
-        //for (auto e : edges) { std::cout << e; }
-        //std::cout << std::endl;
+    typedef ctag::Reconstructor<Oracle> Reconstructor;
+};
+
+
+TEST_F(Reconstructor2Test, reconstruct_basic_example) {
 
         // Populate points
+				std::vector<double> coords = {1,4,12,45,23,13};
+				std::vector<int> edges = {0,2,1,2};
          std::vector<Point> points;
          auto coord_i = coords.begin();
          while (coord_i != coords.end()) {
@@ -68,22 +56,6 @@ public:
          Reconstructor reconstructor;
          reconstructor.reconstruct(std::back_inserter(result), _oracle);
          std::cout << _oracle.verify(result) << std::endl;
-    }
 
-    bool test() const {
-        // std::vector<Simplex> result;
-        // Reconstructor reconstructor;
-        // reconstructor.reconstruct(std::back_inserter(result), oracle);
-        //
-        // return oracle.verify(result);
-        return false;
-    }
+    EXPECT_EQ(0,0);
 };
-
-};
-
-#endif
-
-#pragma once
-
-using PyReconstructionTester = ctag::ReconstructionTester;

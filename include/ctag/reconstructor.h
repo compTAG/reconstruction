@@ -2,6 +2,9 @@
 #define _RECONSTRUCTOR_H_
 
 #include <iostream>
+#include "ctag/oracle.h"
+#include "ctag/vertex_reconstructor.h"
+#include "ctag/edge_reconstructor.h"
 
 namespace ctag {
 
