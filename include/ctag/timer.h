@@ -1,7 +1,7 @@
 #ifndef _TIMER_H_
 #define _TIMER_H_
 
-#include "plf/nanotimer.h"
+#include <plf_nanotimer.h>
 
 namespace ctag {
 class Timer {
