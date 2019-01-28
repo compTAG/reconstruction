@@ -13,7 +13,7 @@ void init_reconstruction_tester(py::module& m)
 {
     using namespace pybind11::literals;
 
-    py::class_<PyReconstructionTester>(m, "Reconstruct", "an abstract `test` class")
+    py::class_<PyReconstructionTester>(m, "ReconstructionRunner", "a running for a reconstruction test")
         .def(py::init<std::vector<double>, std::vector<int>>(), "initialize simple test class object")
     ;
 }
