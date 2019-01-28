@@ -63,10 +63,6 @@ public:
     template<class Point>
     static double distance(const Point& p1, const Point& p2) {
         double acc = 0;
-        std::cout << p1.dim() << std::endl;
-        std::cout << p2.dim() << std::endl;
-        std::cout << p1 << std::endl;
-        std::cout << p2 << std::endl;
 
         for (size_t i = 0; i < p1.dim() ; ++i) {
             double diff = p1[i] - p2[i];

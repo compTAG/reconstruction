@@ -68,15 +68,6 @@ protected:
             InputIter other_begin, InputIter other_end) const {
         Points my_pts = sorted_points(begin, end);
         Points other_pts = sorted_points(other_begin, other_end);
-        std::cout << "size is :" <<my_pts.size() << std::endl;
-        for (auto s : my_pts) {
-        std::cout << s << std::endl;
-        }
-        std::cout << "size is :" << other_pts.size() << std::endl;
-        for (auto s : other_pts) {
-        std::cout << s << std::endl;
-        }
-
         return std::equal(my_pts.begin(), my_pts.end(), other_pts.begin(),
             [&](const Point& p, const Point& q) { return vert_equal(p, q); }
         );
