@@ -3,8 +3,9 @@
 
  #include "ctag/oracle.h"
  #include "ctag/reconstructor.h"
+ #include "ctag/timer.h"
 
-#include<vector>
+#include <vector>
 namespace ctag {
 
 class ReconstructionRunner {
@@ -13,6 +14,7 @@ private:
      typedef Oracle::SimplicialComplex SimplicialComplex;
 
      typedef ctag::Reconstructor<Oracle> Reconstructor;
+     typedef ctag::Timer Timer;
 
      Oracle _oracle;
 
@@ -29,13 +31,17 @@ public:
     }
 
     double benchmark(int num_iterations) const {
+        Timer t;
         Reconstructor reconstructor;
 
+        t.start();
+        _oracle.timer_reset();
         for (int i = 0 ; i < num_iterations ; ++i) {
             SimplicialComplex result;
             reconstructor.reconstruct(std::back_inserter(result), _oracle);
         }
-        return 1234.90889;
+        t.stop();
+        return t.total() - _oracle.timer_total();
     }
 
 };

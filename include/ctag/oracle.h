@@ -164,8 +164,12 @@ public:
             && edges_subset(other_begin, other_end, begin, end);
     }
 
-    double nano_seconds() const {
+    double timer_total() const {
         return _timer.total();
+    }
+
+    void timer_reset() const {
+        _timer.reset();
     }
 };
 

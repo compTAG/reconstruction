@@ -14,6 +14,7 @@ public:
     Timer() : _delta(0) {}
     void start() { _timer.start(); }
     void stop() { _delta += _timer.get_elapsed_ns(); }
+    void reset() { _delta = 0; }
     double total() const { return _delta; }
 };
 };
