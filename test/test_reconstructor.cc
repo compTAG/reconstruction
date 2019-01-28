@@ -35,3 +35,38 @@ TEST_F(ReconstructorTest, reconstruct_basic_example) {
     EXPECT_TRUE(oracle.verify(result));
     EXPECT_EQ(0,0);
 };
+
+TEST_F(ReconstructorTest, reconstruct_simple_numerical_error) {
+    Point p0({1,4});
+    Point p1({12,45});
+    Point p2({23,13});
+
+    Simplex e1({p0, p2});
+    Simplex e2({p1, p2});
+
+    Oracle oracle({ e1, e2 });
+
+    SimplicialComplex result;
+    Reconstructor reconstructor;
+    reconstructor.reconstruct(std::back_inserter(result), oracle);
+
+    EXPECT_TRUE(oracle.verify(result));
+};
+
+TEST_F(ReconstructorTest, reconstruct_verts_without_edges) {
+    Point p0({1,4});
+    Point p1({12,45});
+    Point p2({23,13});
+
+    Simplex s0({p0});
+    Simplex s1({p1});
+    Simplex s2({p2});
+
+    Oracle oracle({ s0, s1, s2 });
+
+    SimplicialComplex result;
+    Reconstructor reconstructor;
+    reconstructor.reconstruct(std::back_inserter(result), oracle);
+
+    EXPECT_TRUE(oracle.verify(result));
+};

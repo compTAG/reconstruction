@@ -45,14 +45,15 @@ protected:
     Points sorted_points(InputIter begin, InputIter end) const {
         Points points;
         for (InputIter s = begin ; s != end ; ++s) {
-            for (auto p : s->boundary())  {
-                points.push_back(p[0]);
+            for (int i = 0 ; i < s->size() ; ++i) {
+                points.push_back((*s)[i]);
             }
         }
         std::sort(points.begin(), points.end());
-        std::unique(points.begin(), points.end(),
-            [&](const Point& p, const Point& q) { return vert_equal(p, q); }
-                );
+
+        auto last = std::unique(points.begin(), points.end());
+        points.erase(last, points.end());
+
         return points;
     }
 
@@ -88,13 +89,21 @@ protected:
             || (vert_equal(p1, q2) && vert_equal(p2, q1));
     }
 
+    template <typename Simplex>
+    bool is_vertex(const Simplex& s) const {
+        return s.size() == 1;
+    }
+
     template <typename InputIter>
     bool edges_subset(InputIter begin, InputIter end,
             InputIter other_begin, InputIter other_end) const {
         bool subset = true;
         for (InputIter ei = begin ; ei != end && subset; ++ei) {
+            if (is_vertex(*ei)) { continue; }
+
             bool found = false;
             for (InputIter ej = other_begin ; ej != other_end && !found; ++ej) {
+                if (is_vertex(*ej)) { continue; }
                 found = edge_equal(ei[0][0], ei[0][1], ej[0][0], ej[0][1]);
             }
             subset = subset && found;
