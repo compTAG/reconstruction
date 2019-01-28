@@ -28,7 +28,7 @@ public:
     bool operator<(const Point& p) const {
         size_t i = 0;
         while (i < D && (*this)[i] == p[i]) { ++i; }
-        return (*this)[i] < p[i];
+        return i < D && (*this)[i] < p[i];
     }
 
     friend

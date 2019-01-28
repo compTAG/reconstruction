@@ -102,3 +102,23 @@ TEST_F(OracleTest, verify) {
     EXPECT_FALSE(oracle.verify(s2c));
     EXPECT_FALSE(oracle.verify(s3));
 }
+
+TEST_F(OracleTest, verify_no_edges) {
+    Point p1({0,0});
+    Point p2({2,2});
+
+    Simplex s1({p1});
+    Simplex s2({p2});
+    Simplex e2({p1, p2});
+
+    SimplicialComplex c1 = { s1, s2 };
+    Oracle oracle(c1.begin(), c1.end());
+
+    SimplicialComplex c2 = { e2 };
+    SimplicialComplex c3 = { s2, s1 };
+
+    EXPECT_TRUE(oracle.verify(c1));
+    EXPECT_TRUE(oracle.verify(c3));
+    EXPECT_FALSE(oracle.verify(c2));
+}
+
