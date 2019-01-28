@@ -11,6 +11,8 @@ find_package(Boost)
 install_dependency("dionysus")
 set(DIONYSUS_INCLUDE_DIR "${CMAKE_BINARY_DIR}/dionysus-src/include")
 
+set(PLF_NANOTIMER_DIR "${CMAKE_BINARY_DIR}/plf_nanotimer-src")
+
 enable_testing()
 install_dependency("googletest")
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE) # fix settings on Windows
@@ -22,8 +24,10 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 set(RECONSTRUCTION_INCLUDE_DIR "./include")
 include_directories(
     ${DIONYSUS_INCLUDE_DIR}
+    ${PLF_NANOTIMER_DIR}
     ${Boost_INCLUDE_DIR}
-    ${RECONSTRUCTION_INCLUDE_DIR})
+    ${RECONSTRUCTION_INCLUDE_DIR}
+)
 
 # setup remainder of project
 add_subdirectory(test)
