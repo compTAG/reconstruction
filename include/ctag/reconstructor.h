@@ -25,6 +25,10 @@ public:
         VertexReconstructor vert_reconstructor;
         Vertices verts = vert_reconstructor.reconstruct(oracle);
 
+        for (auto v : verts) {
+            *out++ = Simplex({v});
+        }
+
         Edges edges;
         EdgeReconstructor edge_reconstructor;
         edge_reconstructor.reconstruct(std::back_inserter(edges),
