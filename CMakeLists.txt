@@ -32,3 +32,4 @@ include_directories(
 # setup remainder of project
 add_subdirectory(test)
 add_subdirectory(example)
+add_subdirectory(bindings/python)

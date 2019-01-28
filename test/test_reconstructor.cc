@@ -34,6 +34,7 @@ TEST_F(ReconstructorTest, reconstruct_basic_example) {
     reconstructor.reconstruct(std::back_inserter(result), oracle);
 
     EXPECT_TRUE(oracle.verify(result));
+    EXPECT_EQ(0,0);
 };
 
 TEST_F(ReconstructorTest, reconstruct_simple_numerical_error) {

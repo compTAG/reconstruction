@@ -111,6 +111,34 @@ public:
     template<class Iterator>
     Oracle(Iterator begin, Iterator end) : _simplices(begin, end) {}
 
+    template<class CoordIter, class EdgeIter>
+    Oracle(CoordIter coords_begin, CoordIter coords_end,
+            EdgeIter edges_begin, EdgeIter edges_end) {
+
+        std::vector<Point> points;
+        auto coord_i = coords_begin;
+        while (coord_i != coords_end) {
+            Coordinate x = *coord_i;
+            ++coord_i;
+            assert(coord_i != coords_end);
+            Coordinate y = *coord_i;
+            points.push_back(Point({x, y}));
+            ++coord_i;
+        }
+
+        SimplicialComplex simplices;
+        auto edge_i = edges_begin;
+        while (edge_i != edges_end) {
+            int src = *edge_i;
+            ++edge_i;
+            assert(edge_i != edges_end);
+            int dst = *edge_i;
+
+            _simplices.push_back(Simplex({points[src], points[dst]}));
+            ++edge_i;
+        }
+    }
+
     Diagram diagram(const Direction& d) const {
         _timer.start();
         HeightFunction f(d);
@@ -136,8 +164,12 @@ public:
             && edges_subset(other_begin, other_end, begin, end);
     }
 
-    double nano_seconds() const {
+    double timer_total() const {
         return _timer.total();
+    }
+
+    void timer_reset() const {
+        _timer.reset();
     }
 };
 

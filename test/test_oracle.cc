@@ -13,6 +13,22 @@ public:
     typedef Oracle::Diagram Diagram;
 };
 
+TEST_F(OracleTest, constructor_coord_edge) {
+    std::vector<double> coords = {1,4,12,45,23,13};
+    std::vector<int> edges = {0,2,1,2};
+
+    Oracle oracle(coords.begin(), coords.end(), edges.begin(), edges.end());
+
+    Point p0({1,4});
+    Point p1({12,45});
+    Point p2({23,13});
+
+    Simplex e1({p0, p2});
+    Simplex e2({p1, p2});
+
+    EXPECT_TRUE(oracle.verify({e1, e2}));
+};
+
 TEST_F(OracleTest, diagram) {
     Point p1({0,0});
     Point p2({2,2});
