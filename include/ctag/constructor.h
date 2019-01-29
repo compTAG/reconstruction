@@ -146,7 +146,7 @@ public:
 
             Vector v_perp = {-boost::qvm::Y(v), boost::qvm::X(v)};
 
-            double theta = bowtie_angle / 10.;
+            double theta = bowtie_angle / 2.;
             Matrix rot = { cos(theta), -sin(theta), sin(theta), cos(theta) };
             Vector d1 = rot * v_perp;
             Vector d2 = transposed(rot) * v_perp;
