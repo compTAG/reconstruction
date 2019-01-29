@@ -37,7 +37,7 @@ public:
         factory.make_filtration_lines(std::back_inserter(lines), diagram);
     }
 
-    double get_width(FiltrationLines& lines, const Oracle& oracle) const {
+    double get_width(const Oracle& oracle) const {
         Direction d1({1,0});
         Diagram diagram = oracle.diagram(d1);
         auto minmax = std::minmax_element(diagram.begin(0), diagram.end(0),
@@ -46,11 +46,10 @@ public:
         double min = minmax.first->birth;
         double max = minmax.second->birth;
 
-        fill_filtration_lines(lines, diagram);
         return max - min;
     }
 
-    double get_height(const Oracle& oracle) const {
+    double get_height(FiltrationLines& lines, const Oracle& oracle) const {
         Direction d2({0,1});
         Diagram diagram = oracle.diagram(d2);
 
@@ -63,22 +62,23 @@ public:
         std::vector<double> diff;
         std::adjacent_difference(births.begin(), births.end(), std::back_inserter(diff));
 
+        fill_filtration_lines(lines, diagram);
         double min = *std::min_element(diff.begin()+1, diff.end());
         return min;
     }
 
     Direction get_direction(double width, double height) const {
-        double norm = width*width + height*height;
-        return Direction({ width/norm, height/norm/2. });
+        double w = width;
+        double h = height / 2;
+        double norm = sqrt(w*w + h*h);
+        return Direction({ -height/norm, width/norm });
     }
-
 
     void filtration_lines_for_direction(FiltrationLines& lines,
             const Oracle& oracle, const Direction& direction) const {
         Diagram diagram = oracle.diagram(direction);
         fill_filtration_lines(lines, diagram);
     }
-
 
     Vertices make_vertices(
             const FiltrationLines& lines1,
@@ -101,8 +101,8 @@ public:
 
     Vertices reconstruct(const Oracle& oracle) const {
         FiltrationLines lines1;
-        double width = get_width(lines1, oracle);
-        double height = get_height(oracle);
+        double width = get_width(oracle);
+        double height = get_height(lines1, oracle);
         Direction d3 = get_direction(width, height);
 
         FiltrationLines lines3;
