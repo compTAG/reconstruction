@@ -217,4 +217,3 @@ TEST_F(ReconstructorTest, reconstruct_failed07) {
 
     EXPECT_TRUE(oracle.verify(result));
 };
-
