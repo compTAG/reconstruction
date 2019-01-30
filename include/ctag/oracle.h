@@ -176,6 +176,19 @@ public:
     void timer_reset() const {
         _timer.reset();
     }
+
+    std::string to_string() const {
+        std::ostringstream os;
+        for (auto s : _simplices) {
+            os << s << std::endl;
+        }
+        return os.str();
+    }
+
+    friend std::ostream& operator<<(std::ostream& out, const Oracle& o) {
+        out << o.to_string() << std::endl;
+        return out;
+    }
 };
 
 };

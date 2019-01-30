@@ -1,7 +1,0 @@
-* General Reconstruction
-** DONE Discuss data structure
-** TODO Read through Daves code by 8-24-18
-** TODO Develop data structure
-*** TODO Array for vertices
-*** TODO Array of arrays for edges
-
