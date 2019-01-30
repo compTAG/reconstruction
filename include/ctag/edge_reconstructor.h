@@ -2,6 +2,8 @@
 #define _EDGE_RECONSTRUCTOR_H_
 
 #include <iostream>
+#include <string>
+#include <sstream>
 
 #include "ctag/constructor.h"
 #include "ctag/edge_predicate.h"
@@ -24,6 +26,14 @@ protected:
         return min;
     }
 
+    void check_angle(double angle, double tolerance=1e-6) const {
+        if (angle < tolerance) {
+            std::ostringstream oss;
+            oss << "Bowtie angle too small " << angle;
+            throw std::range_error(oss.str());
+        }
+    }
+
 public:
     template <class OutputIter, class InputIter>
     void reconstruct(OutputIter out, const Oracle& oracle,
@@ -32,7 +42,7 @@ public:
         typedef std::pair< InputIter, InputIter > Edge;
 
         double bowtie_angle = get_bowtie_angle(verts_begin, verts_end);
-        assert(bowtie_angle > 1e-6);
+        check_angle(bowtie_angle);
         EdgePredicate is_edge(bowtie_angle);
 
         for (InputIter vi = verts_begin ; vi != verts_end ; ++vi) {

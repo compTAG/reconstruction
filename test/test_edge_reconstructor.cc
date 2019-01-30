@@ -52,3 +52,25 @@ TEST_F(EdgeReconstructorTest, reconstruct_basic_example) {
     EXPECT_EQ(p4, *(ei->second));
 }
 
+TEST_F(EdgeReconstructorTest, angle_error) {
+    Point p1({0,0});
+    Point p2({1,0});
+    Point p3({1,0.0000005});
+
+    Simplex e1({p1, p2});
+    Simplex e2({p2, p3});
+
+    Oracle oracle({ e1, e2 });
+
+    std::vector<Point> points = { p1, p2, p3 };
+
+    typedef typename std::vector<Point>::const_iterator PIter;
+    std::vector< std::pair< PIter, PIter> > edges;
+
+    EdgeReconstructor reconstructor;
+
+    ASSERT_THROW({
+        reconstructor.reconstruct(std::back_inserter(edges),
+                oracle, points.begin(), points.end());
+    }, std::range_error);
+};
