@@ -6,6 +6,7 @@
 - [CMake](https://cmake.org) (tested with 3.11.0)
 - [Dionysus](https://github.com/mrzv/dionysus) (tested with 2.0.6)
 - [Google Test](https://github.com/google/googletest) (tested with 1.8.0)
+- [PLF Nanotimer](https://github.com/mattreecebentley/plf_nanotimer) (tested with commit 8c42255)
 
 ## Building and Setup
 
