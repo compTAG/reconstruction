@@ -1,5 +1,6 @@
 set(EXAMPLES
     height-filtration
+    reconstruct-complex
 )
 
 foreach(example ${EXAMPLES})
