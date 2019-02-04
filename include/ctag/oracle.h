@@ -120,16 +120,9 @@ public:
     Oracle(CoordIter coords_begin, CoordIter coords_end,
             EdgeIter edges_begin, EdgeIter edges_end) {
 
-        std::vector<Point> points;
-        auto coord_i = coords_begin;
-        while (coord_i != coords_end) {
-            Coordinate x = *coord_i;
-            ++coord_i;
-            assert(coord_i != coords_end);
-            Coordinate y = *coord_i;
-            points.push_back(Point({x, y}));
-            _simplices.push_back(Simplex({points.back()}));
-            ++coord_i;
+        std::vector<Point> points = Constructor::points(coords_begin, coords_end);
+        for (auto p : points) {
+            _simplices.push_back(Simplex({p}));
         }
 
         auto edge_i = edges_begin;
