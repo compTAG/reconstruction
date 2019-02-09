@@ -156,6 +156,31 @@ public:
                     Direction({ boost::qvm::X(d2), boost::qvm::Y(d2) }));
 
     }
+
+    template <class InputIter>
+    static double get_bowtie_angle(InputIter verts_begin, InputIter verts_end) {
+        double min = Constructor::max_angle();
+        for (InputIter vi = verts_begin ; vi != verts_end ; ++vi) {
+            double cur_min = Constructor::min_angle(vi, verts_begin, verts_end);
+            min = std::min(min, cur_min);
+        }
+        return min;
+    }
+
+    template<class CoordIter>
+    static std::vector<Point> points(CoordIter begin, CoordIter end) {
+        std::vector<Point> points;
+        auto coord_i = begin;
+        while (coord_i != end) {
+            Coordinate x = *coord_i;
+            ++coord_i;
+            assert(coord_i != end);
+            Coordinate y = *coord_i;
+            points.push_back(Point({x, y}));
+            ++coord_i;
+        }
+        return points;
+    }
 };
 };
 
