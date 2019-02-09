@@ -31,18 +31,17 @@ public:
          return _oracle.verify(result);
     }
 
-    double benchmark(int num_iterations) const {
-        Timer t;
-        Reconstructor reconstructor;
+    std::vector<std::vector<double>> benchmark(int num_iterations) const {
+        std::vector<std::vector<double>> times;
 
-        t.start();
-        _oracle.timer_reset();
+        Reconstructor reconstructor;
         for (int i = 0 ; i < num_iterations ; ++i) {
             SimplicialComplex result;
-            reconstructor.reconstruct(std::back_inserter(result), _oracle);
+            times.push_back(
+                reconstructor.reconstruct(std::back_inserter(result), _oracle)
+            );
         }
-        t.stop();
-        return t.total() - _oracle.timer_total();
+        return times;
     }
 
 };
