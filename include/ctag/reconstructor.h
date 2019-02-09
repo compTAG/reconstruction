@@ -24,13 +24,23 @@ protected:
 
 public:
     template <class OutputIter>
-    void reconstruct(OutputIter out, const Oracle& oracle) const {
+    std::vector<double> reconstruct(OutputIter out, const Oracle& oracle) const {
+        Timer t;
+        oracle.timer_reset();
+        t.start();
+
         VertexReconstructor vert_reconstructor;
         Vertices verts = vert_reconstructor.reconstruct(oracle);
 
         for (auto v : verts) {
             *out++ = Simplex({v});
         }
+
+        t.stop();
+        double vert_time = t.total() - oracle.timer_total();
+        t.reset();
+        oracle.timer_reset();
+        t.start();
 
         Edges edges;
         EdgeReconstructor edge_reconstructor;
@@ -40,6 +50,10 @@ public:
         for (auto edge : edges) {
             *out++ = Simplex({*edge.first, *edge.second});
         }
+
+        t.stop();
+        double edge_time = t.total() - oracle.timer_total();
+        return { vert_time, edge_time };
     }
 };
 };
