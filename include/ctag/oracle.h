@@ -104,6 +104,19 @@ protected:
         return subset;
     }
 
+    Diagram make_diagram(const Direction& d) const {
+        HeightFunction f(d);
+
+        FiltrationFactory factory = make_filtration_factory();
+        Filtration filtration = factory.make_filtration(
+                f, _simplices.begin(), _simplices.end());
+
+        DiagramFactory diagram_factory = make_diagram_factory();
+        Diagram diagram = diagram_factory.make_diagram(f, filtration);
+
+        return diagram;
+    }
+
 public:
     Oracle(const std::initializer_list<Simplex>& simplices) :
         Oracle(std::begin(simplices), std::end(simplices)) {}
@@ -139,17 +152,26 @@ public:
 
     Diagram diagram(const Direction& d) const {
         _timer.start();
-        HeightFunction f(d);
+        Diagram diagram = make_diagram(d);
+        _timer.stop();
+        return diagram;
+    }
 
-        FiltrationFactory factory = make_filtration_factory();
-        Filtration filtration = factory.make_filtration(
-                f, _simplices.begin(), _simplices.end());
-
-        DiagramFactory diagram_factory = make_diagram_factory();
-        Diagram diagram = diagram_factory.make_diagram(f, filtration);
+    Diagram diagram_zero_only(const Direction& d) const {
+        _timer.start();
+        Diagram dgm0(d);
+        // NOTE: the braces below are for scoping.  They cause "diagram" to
+        // go out of scope before the timer stops, which causes the memory of
+        // the 0th and 1st dim diagram to be cleaned up
+        {
+            Diagram diagram = make_diagram(d);
+            for (auto p = diagram.begin(0) ; p != diagram.end(0) ; ++p) {
+                dgm0.push_back(p->birth, p->death, 0);
+            }
+        }
         _timer.stop();
 
-        return diagram;
+        return dgm0;
     }
 
     bool verify(const SimplicialComplex& other) const {

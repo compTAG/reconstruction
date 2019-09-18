@@ -1,8 +1,12 @@
+#include <stdlib.h>
+
 #include <gtest/gtest.h>
 
 #include "ctag/oracle.h"
 #include "ctag/vertex_reconstructor.h"
 #include "ctag/constructor.h"
+#include "ctag/timer.h"
+
 
 class VertexReconstructorTest : public ::testing::Test {
 public:
@@ -118,3 +122,54 @@ TEST_F(VertexReconstructorTest, reconstruct_numerical_error01) {
         simplices.erase(result);
     }
 }
+
+TEST_F(VertexReconstructorTest, vertex_scaling_timing) {
+    srand(0);
+
+    typedef ctag::VertexReconstructor<Oracle> VertexReconstructor;
+    VertexReconstructor reconstructor;
+
+    int num_verts = 100;
+    std::vector<double> verts;
+    for (int i = 0 ; i < num_verts  ; ++i) {
+        const double scale = 100000000.0;
+        double x = rand() / scale;
+        double y = rand() / scale;
+        verts.push_back(x);
+        verts.push_back(y);
+    }
+
+    std::vector<int> edges;
+    Oracle oracle_no_edges(verts.begin(), verts.end(), edges.begin(), edges.end());
+
+    int num_edges = 1000;
+    for (int i = 0 ; i < num_edges ; ++i) {
+        int u = rand() % num_verts;
+        int v = rand() % num_verts;
+        edges.push_back(u);
+        edges.push_back(v);
+    }
+    Oracle oracle_edges(verts.begin(), verts.end(), edges.begin(), edges.end());
+
+    Direction d({1,0});
+    int num_iter = 20;
+
+    ctag::Timer timer;
+    timer.start();
+    for (int i = 0 ; i < num_iter ; ++i) {
+        reconstructor.reconstruct(oracle_no_edges);
+    }
+    timer.stop();
+    double delta_no_edges = timer.total() - oracle_no_edges.timer_total();
+
+    timer.reset();
+    timer.start();
+    for (int i = 0 ; i < num_iter ; ++i) {
+        reconstructor.reconstruct(oracle_edges);
+    }
+    timer.stop();
+    double delta_edges = timer.total() - oracle_edges.timer_total();
+
+    EXPECT_LT(fabs(delta_no_edges - delta_edges), 1e6);
+}
+

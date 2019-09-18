@@ -18,7 +18,7 @@ install_dependency("googletest")
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE) # fix settings on Windows
 
 # setup the build flags
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -O2")
 
 # setup the includes
 set(RECONSTRUCTION_INCLUDE_DIR "./include")
