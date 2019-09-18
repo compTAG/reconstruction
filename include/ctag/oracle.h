@@ -152,6 +152,20 @@ public:
         return diagram;
     }
 
+    Diagram diagram_zero_only(const Direction& d) const {
+        _timer.start();
+        Diagram dgm0(d);
+        {
+            Diagram diagram = make_diagram(d);
+            for (auto p = diagram.begin(0) ; p != diagram.end(0) ; ++p) {
+                dgm0.push_back(p->birth, p->death, 0);
+            }
+        }
+        _timer.stop();
+
+        return dgm0;
+    }
+
     bool verify(const SimplicialComplex& other) const {
         auto begin = _simplices.begin();
         auto end = _simplices.end();
