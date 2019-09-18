@@ -160,15 +160,15 @@ public:
     Diagram diagram_zero_only(const Direction& d) const {
         _timer.start();
         Diagram dgm0(d);
-        // NOTE: the braces below are ment for scoping.  They cause "diagram" to
+        // NOTE: the braces below are for scoping.  They cause "diagram" to
         // go out of scope before the timer stops, which causes the memory of
         // the 0th and 1st dim diagram to be cleaned up
-        // {
+        {
             Diagram diagram = make_diagram(d);
             for (auto p = diagram.begin(0) ; p != diagram.end(0) ; ++p) {
                 dgm0.push_back(p->birth, p->death, 0);
             }
-        // }
+        }
         _timer.stop();
 
         return dgm0;
