@@ -28,6 +28,10 @@ protected:
     typedef typename Oracle::Point Point;
     typedef typename Oracle::Simplex Simplex;
 
+    Diagram get_diagram(const Oracle& oracle, const Direction d) const {
+        return oracle.diagram_zero_only(d);
+    }
+
 public:
     typedef typename std::vector<Point> Vertices;
 
@@ -39,7 +43,7 @@ public:
 
     double get_width(const Oracle& oracle) const {
         Direction d1({1,0});
-        Diagram diagram = oracle.diagram(d1);
+        Diagram diagram = get_diagram(oracle, d1);
         auto minmax = std::minmax_element(diagram.begin(0), diagram.end(0),
             [](const Pair& p1, const Pair& p2) { return p1.birth < p2.birth; }
         );
@@ -51,7 +55,7 @@ public:
 
     double get_height(FiltrationLines& lines, const Oracle& oracle) const {
         Direction d2({0,1});
-        Diagram diagram = oracle.diagram(d2);
+        Diagram diagram = get_diagram(oracle, d2);
 
         std::vector<double> births;
         std::transform(diagram.begin(0), diagram.end(0), std::back_inserter(births),
@@ -76,7 +80,7 @@ public:
 
     void filtration_lines_for_direction(FiltrationLines& lines,
             const Oracle& oracle, const Direction& direction) const {
-        Diagram diagram = oracle.diagram(direction);
+        Diagram diagram = get_diagram(oracle, direction);
         fill_filtration_lines(lines, diagram);
     }
 
