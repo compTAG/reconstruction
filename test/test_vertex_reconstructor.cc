@@ -34,8 +34,9 @@ TEST_F(VertexReconstructorTest, reconstruct_basic_example) {
     };
     Oracle oracle(simplices.begin(), simplices.end());
 
+    Vertices verts;
     VertexReconstructor reconstructor;
-    Vertices verts = reconstructor.reconstruct(oracle);
+    reconstructor.reconstruct(std::back_inserter(verts), oracle);
 
     EXPECT_EQ(simplices.size(), verts.size());
 
@@ -63,8 +64,9 @@ TEST_F(VertexReconstructorTest, reconstruct_simple_numerical_error) {
     };
     Oracle oracle(simplices.begin(), simplices.end());
 
+    Vertices verts;
     VertexReconstructor reconstructor;
-    Vertices verts = reconstructor.reconstruct(oracle);
+    reconstructor.reconstruct(std::back_inserter(verts), oracle);
 
     EXPECT_EQ(simplices.size(), verts.size());
 
@@ -103,8 +105,9 @@ TEST_F(VertexReconstructorTest, reconstruct_numerical_error01) {
 
     Oracle oracle(simplices.begin(), simplices.end());
 
+    Vertices verts;
     VertexReconstructor reconstructor;
-    Vertices verts = reconstructor.reconstruct(oracle);
+    reconstructor.reconstruct(std::back_inserter(verts), oracle);
 
     EXPECT_EQ(simplices.size(), verts.size());
 
@@ -157,7 +160,8 @@ TEST_F(VertexReconstructorTest, vertex_scaling_timing) {
     ctag::Timer timer;
     timer.start();
     for (int i = 0 ; i < num_iter ; ++i) {
-        reconstructor.reconstruct(oracle_no_edges);
+        Vertices verts;
+        reconstructor.reconstruct(std::back_inserter(verts), oracle_no_edges);
     }
     timer.stop();
     double delta_no_edges = timer.total() - oracle_no_edges.timer_total();
@@ -165,7 +169,8 @@ TEST_F(VertexReconstructorTest, vertex_scaling_timing) {
     timer.reset();
     timer.start();
     for (int i = 0 ; i < num_iter ; ++i) {
-        reconstructor.reconstruct(oracle_edges);
+        Vertices verts;
+        reconstructor.reconstruct(std::back_inserter(verts), oracle_edges);
     }
     timer.stop();
     double delta_edges = timer.total() - oracle_edges.timer_total();
