@@ -78,6 +78,15 @@ entry is the number of nanoseconds for computing the vertices and the second
 entry is the number of nanoseconds for computing the edges.  For all values, the
 number of nanoseconds for computing the persistence diagrams are removed.
 
+If we are only interested in running the benchmark over the vertices, we can use
+the `benchmark_vertices` function.
+
+    >>> runner.benchmark_vertices(k)
+    [[21690.0, 0.0], [15182.0, 0.0], [14655.0, 0.0], [15109.0, 0.0], [22510.0, 0.0]]
+
+The output has a similar structure as `benchmark`, but since the edges were not
+run, they have the value 0.
+
 We can also compute min angles.  To compute min angles, all we need are the
 coordinates of the vertices (same format as above).  For example to compute the
 min angle of the vertex set in the previous example we would run:

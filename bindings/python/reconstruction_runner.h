@@ -5,7 +5,7 @@
 
 #include "ctag/oracle.h"
 #include "ctag/reconstructor.h"
-#include "ctag/timer.h"
+#include "ctag/benchmarker.h"
 
 namespace ctag {
 
@@ -15,7 +15,10 @@ private:
      typedef Oracle::SimplicialComplex SimplicialComplex;
 
      typedef ctag::Reconstructor<Oracle> Reconstructor;
-     typedef ctag::Timer Timer;
+     typedef ctag::VertexReconstructor<Oracle> VertexReconstructor;
+     typedef typename VertexReconstructor::Vertices Vertices;
+
+     typedef ctag::Benchmarker<Oracle> Benchmarker;
 
      Oracle _oracle;
 
@@ -44,6 +47,20 @@ public:
         return times;
     }
 
+    std::vector<std::vector<double>> benchmark_vertices(int num_iterations) const {
+        Benchmarker benchmarker([](const Oracle &o) {
+            Vertices verts;
+            VertexReconstructor reconstructor;
+            reconstructor.reconstruct(std::back_inserter(verts), o);
+        });
+
+        std::vector<std::vector<double>> times;
+        for (int i = 0 ; i < num_iterations ; ++i) {
+            double time = benchmarker.benchmark(_oracle);
+            times.push_back({time, 0});
+        }
+        return times;
+    }
 };
 
 };
