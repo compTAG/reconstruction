@@ -19,7 +19,7 @@ public:
     typedef ctag::Benchmarker<Oracle> Benchmarker;
 };
 
-TEST_F(BenchmarkerTest, playground) {
+TEST_F(BenchmarkerTest, benchmark) {
     Benchmarker benchmarker([](const Oracle &o) {
         Vertices verts;
         VertexReconstructor vert_reconstructor;
