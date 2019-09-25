@@ -29,8 +29,9 @@ public:
         oracle.timer_reset();
         t.start();
 
+        Vertices verts;
         VertexReconstructor vert_reconstructor;
-        Vertices verts = vert_reconstructor.reconstruct(oracle);
+        vert_reconstructor.reconstruct(std::back_inserter(verts), oracle);
 
         for (auto v : verts) {
             *out++ = Simplex({v});

@@ -5,7 +5,7 @@
 #include "ctag/oracle.h"
 #include "ctag/vertex_reconstructor.h"
 #include "ctag/constructor.h"
-#include "ctag/timer.h"
+#include "ctag/benchmarker.h"
 
 
 class VertexReconstructorTest : public ::testing::Test {
@@ -19,6 +19,8 @@ public:
 
     typedef ctag::VertexReconstructor<Oracle> VertexReconstructor;
     typedef VertexReconstructor::Vertices Vertices;
+
+    typedef ctag::Benchmarker<Oracle> Benchmarker;
 
     typedef ctag::Constructor Constructor;
 };
@@ -34,8 +36,9 @@ TEST_F(VertexReconstructorTest, reconstruct_basic_example) {
     };
     Oracle oracle(simplices.begin(), simplices.end());
 
+    Vertices verts;
     VertexReconstructor reconstructor;
-    Vertices verts = reconstructor.reconstruct(oracle);
+    reconstructor.reconstruct(std::back_inserter(verts), oracle);
 
     EXPECT_EQ(simplices.size(), verts.size());
 
@@ -63,8 +66,9 @@ TEST_F(VertexReconstructorTest, reconstruct_simple_numerical_error) {
     };
     Oracle oracle(simplices.begin(), simplices.end());
 
+    Vertices verts;
     VertexReconstructor reconstructor;
-    Vertices verts = reconstructor.reconstruct(oracle);
+    reconstructor.reconstruct(std::back_inserter(verts), oracle);
 
     EXPECT_EQ(simplices.size(), verts.size());
 
@@ -103,8 +107,9 @@ TEST_F(VertexReconstructorTest, reconstruct_numerical_error01) {
 
     Oracle oracle(simplices.begin(), simplices.end());
 
+    Vertices verts;
     VertexReconstructor reconstructor;
-    Vertices verts = reconstructor.reconstruct(oracle);
+    reconstructor.reconstruct(std::back_inserter(verts), oracle);
 
     EXPECT_EQ(simplices.size(), verts.size());
 
@@ -151,25 +156,14 @@ TEST_F(VertexReconstructorTest, vertex_scaling_timing) {
     }
     Oracle oracle_edges(verts.begin(), verts.end(), edges.begin(), edges.end());
 
-    Direction d({1,0});
     int num_iter = 20;
-
-    ctag::Timer timer;
-    timer.start();
-    for (int i = 0 ; i < num_iter ; ++i) {
-        reconstructor.reconstruct(oracle_no_edges);
-    }
-    timer.stop();
-    double delta_no_edges = timer.total() - oracle_no_edges.timer_total();
-
-    timer.reset();
-    timer.start();
-    for (int i = 0 ; i < num_iter ; ++i) {
-        reconstructor.reconstruct(oracle_edges);
-    }
-    timer.stop();
-    double delta_edges = timer.total() - oracle_edges.timer_total();
-
+    Benchmarker benchmarker([](const Oracle &oracle) {
+        Vertices verts;
+        VertexReconstructor reconstructor;
+        reconstructor.reconstruct(std::back_inserter(verts), oracle);
+    });
+    double delta_no_edges = benchmarker.benchmark(oracle_no_edges, num_iter);
+    double delta_edges = benchmarker.benchmark(oracle_edges, num_iter);
     EXPECT_LT(fabs(delta_no_edges - delta_edges), 1e6);
 }
 

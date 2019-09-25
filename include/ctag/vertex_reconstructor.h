@@ -84,26 +84,26 @@ public:
         fill_filtration_lines(lines, diagram);
     }
 
-    Vertices make_vertices(
+    template <class OutputIter>
+    void make_vertices(
+            OutputIter out,
             const FiltrationLines& lines1,
             const FiltrationLines& lines3) const {
-        Vertices vertices;
-
         assert(lines1.size() == lines3.size());
+
         for (int i = 0 ; i < lines1.size() ; ++i) {
             FiltrationLine l1 = lines1[i];
             FiltrationLine l3 = lines3[i];
 
             Point p = Constructor::intersect(l1, l3);
-            vertices.push_back(p);
+            *out++ = p;
         }
-
-        return vertices;
     }
 
 public:
 
-    Vertices reconstruct(const Oracle& oracle) const {
+    template <class OutputIter>
+    void reconstruct(OutputIter out, const Oracle& oracle) const {
         FiltrationLines lines1;
         double width = get_width(oracle);
         double height = get_height(lines1, oracle);
@@ -112,8 +112,7 @@ public:
         FiltrationLines lines3;
         filtration_lines_for_direction(lines3, oracle, d3);
 
-        Vertices vertices = make_vertices(lines1, lines3);
-        return vertices;
+        make_vertices(out, lines1, lines3);
     }
 };
 
