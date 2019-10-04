@@ -93,3 +93,9 @@ min angle of the vertex set in the previous example we would run:
 
     >>> reconstruction.min_angle([1,4, 12,45, 23,13])
     0.5932159179696048
+
+
+And we can get the compiler version that built the library.
+
+    >>> reconstruction.compiler_version()
+    CLANG verson 10.0

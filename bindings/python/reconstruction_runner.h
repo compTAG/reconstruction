@@ -6,6 +6,7 @@
 #include "ctag/oracle.h"
 #include "ctag/reconstructor.h"
 #include "ctag/benchmarker.h"
+#include "ctag/compiler_stats.h"
 
 namespace ctag {
 
